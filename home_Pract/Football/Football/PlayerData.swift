@@ -18,5 +18,6 @@ struct Player: Identifiable {
 
 var playerList = [
     Player (avatar: "Messi_avt", image: "Messi", name: "Messi", type: "RW", color: .red),
-    Player (avatar: "Stegen_avt", image: "Stegen", name: "Stegen", type: "GK", color: .blue)
+    Player (avatar: "Stegen_avt", image: "Stegen", name: "Stegen", type: "GK", color: .gray),
+    Player (avatar: "Pique_avt", image: "Pique", name: "Pique", type: "CB", color: .blue)
 ]

@@ -60,7 +60,7 @@ struct btnContinue: View {
     
     var body: some View {
         Text("Continue")
-            .accentColor(.white)
+            .foregroundColor(.white)
             .frame(width: 100, height: 50)
             .background(btnColor)
             .cornerRadius(5)

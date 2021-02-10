@@ -11,6 +11,8 @@
 		118A848B25D445CA0027394D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118A848A25D445CA0027394D /* ContentView.swift */; };
 		118A848D25D445CB0027394D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 118A848C25D445CB0027394D /* Assets.xcassets */; };
 		118A849025D445CB0027394D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 118A848F25D445CB0027394D /* Preview Assets.xcassets */; };
+		118A84A925D454930027394D /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118A84A825D454930027394D /* Models.swift */; };
+		118A84AD25D454CB0027394D /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118A84AC25D454CB0027394D /* ViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +22,8 @@
 		118A848C25D445CB0027394D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		118A848F25D445CB0027394D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		118A849125D445CB0027394D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		118A84A825D454930027394D /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		118A84AC25D454CB0027394D /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +61,8 @@
 				118A848C25D445CB0027394D /* Assets.xcassets */,
 				118A849125D445CB0027394D /* Info.plist */,
 				118A848E25D445CB0027394D /* Preview Content */,
+				118A84A825D454930027394D /* Models.swift */,
+				118A84AC25D454CB0027394D /* ViewModel.swift */,
 			);
 			path = Weather;
 			sourceTree = "<group>";
@@ -140,6 +146,8 @@
 			files = (
 				118A848B25D445CA0027394D /* ContentView.swift in Sources */,
 				118A848925D445CA0027394D /* WeatherApp.swift in Sources */,
+				118A84AD25D454CB0027394D /* ViewModel.swift in Sources */,
+				118A84A925D454930027394D /* Models.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

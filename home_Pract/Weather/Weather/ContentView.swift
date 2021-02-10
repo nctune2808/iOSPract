@@ -8,14 +8,27 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @StateObject var viewModel = WeatherViewModel()
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        
+        NavigationView{
+            VStack{
+                Text(viewModel.timezone)
+                Text(viewModel.title)
+                Text(viewModel.description)
+                Text(viewModel.temperature)
+                
+            }.navigationTitle("Weather MVVM")
+        }
+        
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            
     }
 }

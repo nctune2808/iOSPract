@@ -13,6 +13,7 @@
 		1153934025D6D6A6002EC89D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1153933F25D6D6A6002EC89D /* Preview Assets.xcassets */; };
 		1153936525D6FDBC002EC89D /* ProspectsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1153936425D6FDBC002EC89D /* ProspectsView.swift */; };
 		1153936825D6FDE6002EC89D /* MeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1153936725D6FDE6002EC89D /* MeView.swift */; };
+		1153936B25D701BD002EC89D /* Prospect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1153936A25D701BD002EC89D /* Prospect.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		1153934125D6D6A6002EC89D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1153936425D6FDBC002EC89D /* ProspectsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProspectsView.swift; sourceTree = "<group>"; };
 		1153936725D6FDE6002EC89D /* MeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeView.swift; sourceTree = "<group>"; };
+		1153936A25D701BD002EC89D /* Prospect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prospect.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				1153933E25D6D6A6002EC89D /* Preview Content */,
 				1153936425D6FDBC002EC89D /* ProspectsView.swift */,
 				1153936725D6FDE6002EC89D /* MeView.swift */,
+				1153936A25D701BD002EC89D /* Prospect.swift */,
 			);
 			path = TabView;
 			sourceTree = "<group>";
@@ -145,6 +148,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1153936825D6FDE6002EC89D /* MeView.swift in Sources */,
+				1153936B25D701BD002EC89D /* Prospect.swift in Sources */,
 				1153936525D6FDBC002EC89D /* ProspectsView.swift in Sources */,
 				1153933B25D6D6A5002EC89D /* ContentView.swift in Sources */,
 				1153933925D6D6A5002EC89D /* TabViewApp.swift in Sources */,

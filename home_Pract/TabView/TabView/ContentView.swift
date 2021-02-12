@@ -9,21 +9,8 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State private var selectedTab = 0
-    
+    var prospects = Prospects()
     var body: some View {
-//        TabView(selection: $selectedTab) {
-//            Text("Tab 1")
-//                .tabItem {
-//                    Image(systemName: "star")
-//                    Text("One")
-//                }.tag(1)
-//            Text("Tab 2")
-//                .tabItem {
-//                    Image(systemName: "bell")
-//                    Text("Two")
-//                }.tag(0)
-//        }
         
         TabView{
             ProspectsView(filter: .none)
@@ -41,13 +28,13 @@ struct ContentView: View {
                 .tabItem {
                     Image(systemName: "questionmark.diamond")
                     Text("Uncontaced")
-                }.tag(1)
+                }.tag(2)
             MeView()
                 .tabItem {
                     Image(systemName: "person.crop.square")
                     Text("Me")
-                }.tag(1)
-        }
+                }.tag(3)
+        }.environmentObject(prospects)
     }
 }
 

@@ -13,6 +13,7 @@ struct ProspectsView: View {
         case none, contacted, uncontacted
     }
     
+    @EnvironmentObject var prospects: Prospects
     let filter:FilterType
     
     var title: String {
@@ -26,10 +27,40 @@ struct ProspectsView: View {
         }
     }
     
+    var filteredProspects: [Prospect] {
+        switch filter {
+        case .none:
+            return prospects.people
+        case .contacted:
+            return prospects.people.filter{ $0.isContacted}
+        case .uncontacted:
+            return prospects.people.filter{ !$0.isContacted}
+        }
+    }
+    
     var body: some View {
         NavigationView{
-            Text(title)
-                .navigationBarTitle(title)
+            List{
+                ForEach(filteredProspects) {
+                    prospect in VStack(alignment: .leading) {
+                        Text(prospect.name)
+                            .font(.headline)
+                        Text(prospect.emailAddress)
+                            .foregroundColor(.secondary)
+                    }
+                }
+            }
+            .navigationBarTitle(title)
+            .navigationBarItems( trailing: Button(action: {
+                let prospect = Prospect()
+                prospect.name = "TUAN"
+                prospect.emailAddress = "TUAN@mail.com"
+                self.prospects.people.append(prospect)
+            }) {
+                Image(systemName: "qrcode.viewfinder")
+                Text("Scan")
+            })
+
         }
         
     }

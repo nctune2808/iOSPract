@@ -20,7 +20,8 @@ struct Card : Identifiable {
 }
 
 class Cards : ObservableObject {
-    @Published var brands : [Card]
+    @Published var brands = [Card]()
+    @Published var last = -1
     
     init() {
         self.brands = []
@@ -41,8 +42,13 @@ class Cards : ObservableObject {
             if brands[i].id == card.id {
                 brands[i].swipe = value
                 brands[i].degree = degree
+                last = i
             }
         }
+    }
+    
+    func goBack(index: Int) {
+        brands[index].swipe = 0
     }
     
 }

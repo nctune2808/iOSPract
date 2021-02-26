@@ -13,6 +13,7 @@
 		112D70D825E90FBE0021BF57 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 112D70D725E90FBE0021BF57 /* Assets.xcassets */; };
 		112D70DB25E90FBE0021BF57 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 112D70DA25E90FBE0021BF57 /* Preview Assets.xcassets */; };
 		112D70DE25E90FBE0021BF57 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 112D70DC25E90FBE0021BF57 /* LaunchScreen.storyboard */; };
+		112D70EF25E944C20021BF57 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112D70EE25E944C20021BF57 /* Card.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		112D70DA25E90FBE0021BF57 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		112D70DD25E90FBE0021BF57 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		112D70DF25E90FBE0021BF57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		112D70EE25E944C20021BF57 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 		112D70D025E90FBD0021BF57 /* CardWallet */ = {
 			isa = PBXGroup;
 			children = (
+				112D70E825E9440D0021BF57 /* Model */,
 				112D70D125E90FBD0021BF57 /* AppDelegate.swift */,
 				112D70D325E90FBD0021BF57 /* SceneDelegate.swift */,
 				112D70D525E90FBD0021BF57 /* ContentView.swift */,
@@ -73,6 +76,14 @@
 				112D70DA25E90FBE0021BF57 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		112D70E825E9440D0021BF57 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				112D70EE25E944C20021BF57 /* Card.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -148,6 +159,7 @@
 				112D70D225E90FBD0021BF57 /* AppDelegate.swift in Sources */,
 				112D70D425E90FBD0021BF57 /* SceneDelegate.swift in Sources */,
 				112D70D625E90FBD0021BF57 /* ContentView.swift in Sources */,
+				112D70EF25E944C20021BF57 /* Card.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -52,55 +52,72 @@ struct BodyView : View {
     
     @State var size : CGSize = .zero
     @EnvironmentObject var cards: Cards
-    
+    @State var scrolled = 1
     var body: some View {
         
-        
         GeometryReader { geo in
-            
+
             ZStack {
                 
                 Color(.white).edgesIgnoringSafeArea(.all)
                 
                 Loader()
                 
-                ForEach(self.cards.brands) { card in
+                ForEach(cards.brands) { card in
                     
                     VStack {
                         Image(card.image)
                             .resizable()
-                            .frame(width: geo.size.width - 40, height: 250)
+                            .aspectRatio(contentMode: .fill)
+                            .cornerRadius(30)
+                            .frame(                                 // image resize itself
+                                width: (geo.size.width / 1.2) ,
+                                height: (geo.size.height / 3.2) - CGFloat(card.id - scrolled) * 30
+                            )
+                            
                     }
-                    .cornerRadius(20)
-                    .shadow(radius: 20)
-                    .offset(y:card.position)
+                    .shadow(radius: 10)
+                    .offset(y: card.id - scrolled <= 1 ? CGFloat(card.id - scrolled) * -30 : CGFloat( -25 - scrolled))
                     .offset(x: card.swipe)
                     .rotationEffect(.init(degrees: card.degree))
                     .animation(.spring())
                     .gesture(DragGesture()
                         .onChanged({ (value) in
+                            
                             if value.translation.width > 0 {
                                 cards.update(card: card, value: value.translation.width, degree: 10)
                             } else {
                                 cards.update(card: card, value: value.translation.width, degree: -10)
                             }
                             
+                            
+                            print("change:  \(card.position - scrolled)")
                         })
                         .onEnded({ (value) in
+                            
                             if card.swipe > 0 {
-                                if card.swipe > geo.size.width/2 - 100 {
-                                    cards.update(card: card, value: 500, degree: 0)
+                                if card.swipe > geo.size.width/2 {
+                                    cards.update(card: card, value: 1000, degree: 0)
+                                    scrolled += 1
                                 } else {
                                     cards.update(card: card, value: 0, degree: 0)
+        
                                 }
                             }
                             else {
-                                if -card.swipe > geo.size.width/2 - 100 {
-                                    cards.update(card: card, value: -500, degree: 0)
+                                if -card.swipe > geo.size.width/2 {
+                                    cards.update(card: card, value: -1000, degree: 0)
+                                    scrolled += 1
                                 } else {
                                     cards.update(card: card, value: 0, degree: 0)
+         
                                 }
                             }
+                            
+                            print("end:  \(card.position - scrolled)")
+                            
+                            
+                            
                         })
                     )
                     
@@ -108,6 +125,19 @@ struct BodyView : View {
                 }                
             }
         }
+        
+        Button(action: {
+            if cards.last != -1{
+                cards.goBack(index: cards.last)
+                scrolled -= 1
+            }
+        }, label: {
+            Image(systemName: "gobackward")
+                .resizable()
+                .frame(width: 30, height: 30)
+                .foregroundColor(.gray)
+            
+        }).padding(.horizontal,10)
     }
 }
 
@@ -119,16 +149,6 @@ struct BottomView : View {
         
         HStack {
             
-            Button(action: {
-                if cards.last != -1{
-                    cards.goBack(index: cards.last)
-                }
-            }, label: {
-                Image(systemName: "gobackward")
-                    .resizable()
-                    .frame(width: 30, height: 30)
-                    .foregroundColor(.gray)
-            }).padding(.horizontal,10)
             
         }
     }

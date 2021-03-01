@@ -10,11 +10,12 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         
-        VStack{
-            TopView()
-            BodyView()
-            BottomView()
-        }
+        BodyView()
+        
+//        VStack{
+//            TopView()
+//            BodyView()
+//        }
     }
 }
 
@@ -48,122 +49,143 @@ struct TopView : View {
     }
 }
 
+
+
 struct BodyView : View {
     
-    @State var size : CGSize = .zero
-    @EnvironmentObject var cards: Cards
+//    @EnvironmentObject var cards: Cards
     @State var scrolled = 1
+    @State var hero = false
+    
+    @State var data = [
+        Card(id: 1, name: "Morrisons", image: "Morrisons-front", offx: 0, offy: 0, degree: 0, expand: false),
+        Card(id: 2, name: "Boots", image: "Boots-front", offx: 0, offy: 0, degree: 0, expand: false),
+        Card(id: 3, name: "Tesco", image: "Tesco-front", offx: 0, offy: 0, degree: 0, expand: false),
+        Card(id: 4, name: "Iceland", image: "Iceland-front", offx: 0, offy: 0, degree: 0, expand: false),
+        Card(id: 5, name: "M&S", image: "M&S-front", offx: 0, offy: 0, degree: 0, expand: false),
+        Card(id: 6, name: "Nectar", image: "Nectar-front", offx: 0, offy: 0, degree: 0, expand: false),
+        Card(id: 7, name: "Holland&Barrett", image: "Holland&Barrett-front", offx: 0, offy: 0, degree: 0, expand: false),
+        Card(id: 8, name: "Superdrug", image: "Superdrug-front", offx: 0, offy: 0, degree: 0, expand: false),
+    ]
+    
+    
+    
     var body: some View {
         
-        GeometryReader { geo in
-
-            ZStack {
+        VStack {
+            
+            ScrollView(.vertical, showsIndicators: false){
                 
-                Color(.white).edgesIgnoringSafeArea(.all)
-                
-                Loader()
-                
-                ForEach(cards.brands) { card in
+                VStack{
                     
-                    VStack {
-                        Image(card.image)
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .cornerRadius(30)
-                            .frame(                                 // image resize itself
-                                width: (geo.size.width / 1.2) ,
-                                height: (geo.size.height / 3.2) - CGFloat(card.id - scrolled) * 30
-                            )
+                    
+                    
+                    VStack(spacing: 15) {
+                        TopView()
+                        ForEach(0..<data.count) { card in
                             
+                            GeometryReader{ geo in
+                                
+                                CardView(data: $data[card], hero: $hero)
+                                    
+                                    .offset(y: data[card].expand ? -geo.frame(in: .global).minY : 0)
+                                    .opacity(hero ? (data[card].expand ? 1 : 0) : 1)
+                                    
+                                    .onTapGesture {
+                                        
+                                        withAnimation(.interactiveSpring(response: 0.5, dampingFraction: 0.8, blendDuration: 0)){
+                                            
+                                            if !data[card].expand {
+                                                hero.toggle()
+                                                data[card].expand.toggle()
+                                            }
+                                            
+                                           
+                                        }
+
+                                    }
+                                
+                            }
+                            .frame(height: data[card].expand ? UIScreen.main.bounds.height : 250)
+                            .simultaneousGesture(DragGesture(minimumDistance: data[card].expand ? 0 : 500).onChanged({ (_) in
+                                print("dragging")
+                            }))
+                            
+                                    
+                        }
                     }
-                    .shadow(radius: 10)
-                    .offset(y: card.id - scrolled <= 1 ? CGFloat(card.id - scrolled) * -30 : CGFloat( -25 - scrolled))
-                    .offset(x: card.swipe)
-                    .rotationEffect(.init(degrees: card.degree))
-                    .animation(.spring())
-                    .gesture(DragGesture()
-                        .onChanged({ (value) in
-                            
-                            if value.translation.width > 0 {
-                                cards.update(card: card, value: value.translation.width, degree: 10)
-                            } else {
-                                cards.update(card: card, value: value.translation.width, degree: -10)
-                            }
-                            
-                            
-                            print("change:  \(card.position - scrolled)")
-                        })
-                        .onEnded({ (value) in
-                            
-                            if card.swipe > 0 {
-                                if card.swipe > geo.size.width/2 {
-                                    cards.update(card: card, value: 1000, degree: 0)
-                                    scrolled += 1
-                                } else {
-                                    cards.update(card: card, value: 0, degree: 0)
-        
-                                }
-                            }
-                            else {
-                                if -card.swipe > geo.size.width/2 {
-                                    cards.update(card: card, value: -1000, degree: 0)
-                                    scrolled += 1
-                                } else {
-                                    cards.update(card: card, value: 0, degree: 0)
-         
-                                }
-                            }
-                            
-                            print("end:  \(card.position - scrolled)")
-                            
-                            
-                            
-                        })
-                    )
-                    
-                    
-                }                
+                }
+                
+                
             }
         }
-        
-        Button(action: {
-            if cards.last != -1{
-                cards.goBack(index: cards.last)
-                scrolled -= 1
-            }
-        }, label: {
-            Image(systemName: "gobackward")
-                .resizable()
-                .frame(width: 30, height: 30)
-                .foregroundColor(.gray)
-            
-        }).padding(.horizontal,10)
     }
 }
 
-struct BottomView : View {
+
+struct CardView : View {
     
-    @EnvironmentObject var cards : Cards
+    @Binding var data : Card
+    @Binding var hero : Bool
+    
     
     var body: some View {
         
-        HStack {
+        ZStack(alignment: .topTrailing) {
+            VStack {
+                
+                Image(data.image)
+                    .resizable()
+                    .frame(height: data.expand ? 300 : 250)
+                    .cornerRadius(data.expand ? 25 : 25)
+                    .shadow(radius: data.expand ? 10 : 20)
+                
+                if data.expand {
+                    Image(data.image)
+                        .resizable()
+                        .frame(height: data.expand ? 300 : 250)
+                        .cornerRadius(data.expand ? 25 : 25)
+                        .shadow(radius: data.expand ? 10 : 20)
+                    
+                }
+                
+                
+                
+            }
+            .padding(.horizontal, data.expand ? 0 : 20)
+            .contentShape(Rectangle())
             
-            
+            if data.expand {
+                
+                Button(action: {
+                    withAnimation(.interactiveSpring(response: 0.5, dampingFraction: 0.8, blendDuration: 0)){
+                        data.expand.toggle()
+                        hero.toggle()
+                    }
+                }) {
+                    Image(systemName: "xmark")
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Color.black.opacity(0.8))
+                        .clipShape(Circle())
+                }
+                .padding(.top, UIApplication.shared.windows.first?.safeAreaInsets.top)
+                .padding(.trailing,10)
+            }
         }
+        
     }
 }
 
-struct Loader : UIViewRepresentable {
-    func makeUIView(context: UIViewRepresentableContext<Loader>) -> UIActivityIndicatorView {
-        let indicator = UIActivityIndicatorView(style: .large)
-        indicator.startAnimating()
-        return indicator
-    }
-    
-    func updateUIView(_ uiView: UIActivityIndicatorView, context: UIViewRepresentableContext<Loader>) {
 
-    }
+struct Card : Identifiable {
+    var id: Int
+    var name : String
+    var image : String
+    var offx: CGFloat
+    var offy: CGFloat
+    var degree : Double
+    var expand : Bool
 }
 
 struct ContentView_Previews: PreviewProvider {

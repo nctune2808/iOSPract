@@ -35,7 +35,7 @@ struct TopView : View {
                 TextField ("Find card", text: $cardFinder)
                     .disableAutocorrection(true)
                     
-            }.padding(.horizontal,10)
+            }
             
             Button(action: {
                 
@@ -44,8 +44,8 @@ struct TopView : View {
                 Image(systemName: "barcode.viewfinder")
                     .resizable()
                     .frame(width: 30, height: 25)
-            }).padding(.horizontal,10)
-        }
+            })
+        }.padding()
     }
 }
 
@@ -78,15 +78,14 @@ struct BodyView : View {
                 
                 VStack{
                     
-                    
-                    
-                    VStack(spacing: 15) {
+                    VStack(spacing: 0) {
                         TopView()
+                        
                         ForEach(0..<data.count) { card in
                             
                             GeometryReader{ geo in
                                 
-                                CardView(data: $data[card], hero: $hero)
+                                CardView(data: $data[card], hero: $hero, dimens: geo)
                                     
                                     .offset(y: data[card].expand ? -geo.frame(in: .global).minY : 0)
                                     .opacity(hero ? (data[card].expand ? 1 : 0) : 1)
@@ -94,7 +93,7 @@ struct BodyView : View {
                                     .onTapGesture {
                                         
                                         withAnimation(.interactiveSpring(response: 0.5, dampingFraction: 0.8, blendDuration: 0)){
-                                            
+                                            print(UIScreen.main.bounds.height)
                                             if !data[card].expand {
                                                 hero.toggle()
                                                 data[card].expand.toggle()
@@ -106,17 +105,14 @@ struct BodyView : View {
                                     }
                                 
                             }
-                            .frame(height: data[card].expand ? UIScreen.main.bounds.height : 250)
+                            .frame(height: UIScreen.main.bounds.height / ( data[card].expand ? 1 : 3.2 ))
                             .simultaneousGesture(DragGesture(minimumDistance: data[card].expand ? 0 : 500).onChanged({ (_) in
                                 print("dragging")
+                                
                             }))
-                            
-                                    
                         }
                     }
                 }
-                
-                
             }
         }
     }
@@ -125,34 +121,36 @@ struct BodyView : View {
 
 struct CardView : View {
     
-    @Binding var data : Card
-    @Binding var hero : Bool
-    
+    @Binding var data   : Card
+    @Binding var hero   : Bool
+    @State   var dimens : GeometryProxy
     
     var body: some View {
         
         ZStack(alignment: .topTrailing) {
             VStack {
                 
-                Image(data.image)
+                Image(data.image)               // front card
                     .resizable()
-                    .frame(height: data.expand ? 300 : 250)
+                    .frame( height: dimens.size.height / (data.expand ? 3 :  1.1) )
                     .cornerRadius(data.expand ? 25 : 25)
-                    .shadow(radius: data.expand ? 10 : 20)
+                    .shadow(radius: 10)
                 
-                if data.expand {
+                if data.expand {                // back card
                     Image(data.image)
                         .resizable()
-                        .frame(height: data.expand ? 300 : 250)
-                        .cornerRadius(data.expand ? 25 : 25)
-                        .shadow(radius: data.expand ? 10 : 20)
+                        .frame(height: dimens.size.height / 3)
+                        .cornerRadius(25)
+                        .shadow(radius: 10)
+                        
                     
                 }
                 
                 
                 
             }
-            .padding(.horizontal, data.expand ? 0 : 20)
+            .padding(.horizontal, data.expand ? 0 : 15 )
+            .padding(.vertical, dimens.size.height / 25)
             .contentShape(Rectangle())
             
             if data.expand {
@@ -170,7 +168,7 @@ struct CardView : View {
                         .clipShape(Circle())
                 }
                 .padding(.top, UIApplication.shared.windows.first?.safeAreaInsets.top)
-                .padding(.trailing,10)
+                .padding()
             }
         }
         

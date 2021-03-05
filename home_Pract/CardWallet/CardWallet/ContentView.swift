@@ -98,14 +98,12 @@ struct BodyView : View {
                                                 hero.toggle()
                                                 data[card].expand.toggle()
                                             }
-                                            
-                                           
                                         }
-
                                     }
-                                
                             }
-                            .frame(height: UIScreen.main.bounds.height / ( data[card].expand ? 1 : 3.2 ))
+                            .frame(height: UIScreen.main.bounds.height / (
+                                    data[card].expand ? 1 : (UIScreen.main.bounds.height < 750 ? 2.8 : 3.5) )
+                            )
                             .simultaneousGesture(DragGesture(minimumDistance: data[card].expand ? 0 : 500).onChanged({ (_) in
                                 print("dragging")
                                 
@@ -118,8 +116,7 @@ struct BodyView : View {
     }
 }
 
-
-struct CardView : View {
+struct CardView : View {    // clickable
     
     @Binding var data   : Card
     @Binding var hero   : Bool
@@ -132,8 +129,10 @@ struct CardView : View {
                 
                 Image(data.image)               // front card
                     .resizable()
-                    .frame( height: dimens.size.height / (data.expand ? 3 :  1.1) )
-                    .cornerRadius(data.expand ? 25 : 25)
+                    .frame( height: dimens.size.height / (
+                                data.expand ? (UIScreen.main.bounds.height < 750 ? 2.8  : 3.5) :  1.1)
+                    )
+                    .cornerRadius(data.expand ? 30 : 30)
                     .shadow(radius: 10)
                 
                 if data.expand {                // back card
@@ -142,12 +141,7 @@ struct CardView : View {
                         .frame(height: dimens.size.height / 3)
                         .cornerRadius(25)
                         .shadow(radius: 10)
-                        
-                    
                 }
-                
-                
-                
             }
             .padding(.horizontal, data.expand ? 0 : 15 )
             .padding(.vertical, dimens.size.height / 25)

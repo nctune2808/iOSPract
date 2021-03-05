@@ -8,110 +8,114 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var search : String = ""
+    @State var hide = false
+    @State var data = [
+        Card(id: 1, name: "Morrisons", image: "Morrisons-front", expand: false),
+        Card(id: 2, name: "Boots", image: "Boots-front", expand: false),
+        Card(id: 3, name: "Tesco", image: "Tesco-front", expand: false),
+        Card(id: 4, name: "Iceland", image: "Iceland-front", expand: false),
+        Card(id: 5, name: "M&S", image: "M&S-front", expand: false),
+        Card(id: 6, name: "Nectar", image: "Nectar-front", expand: false),
+        Card(id: 7, name: "Holland&Barrett", image: "Holland&Barrett-front", expand: false),
+        Card(id: 8, name: "Superdrug", image: "Superdrug-front", expand: false),
+    ]
+    
     var body: some View {
         
-        BodyView()
+        VStack(spacing: 0) {
+            
+            if !hide { TopView(data: $data, search: $search) }   // header
+            
+            BodyView(data: $data, hide: $hide, search: $search)  // body
+            
+//            if !hide { BottomView() }         // footer
+        }
         
-//        VStack{
-//            TopView()
-//            BodyView()
-//        }
     }
 }
 
 struct TopView : View {
     
-    @State private var cardFinder: String = ""
+    @Binding var data : [Card]
+    @Binding var search : String
     
     var body: some View {
         
         HStack {
         
-            HStack (alignment: .center, spacing: 10) {
-                Image(systemName: "magnifyingglass.circle")
-                    .resizable()
-                    .frame(width: 30, height: 30)
-                    .foregroundColor(.gray)
-                TextField ("Find card", text: $cardFinder)
-                    .disableAutocorrection(true)
-                    
-            }
-            
+            SearchBar(text: $search)
+
             Button(action: {
                 
             }, label: {
-                Text("scan")
                 Image(systemName: "barcode.viewfinder")
                     .resizable()
                     .frame(width: 30, height: 25)
+                    .padding(.trailing,10)
             })
-        }.padding()
+        }
+        .frame(width: UIScreen.main.bounds.width / 1.05, height: 40)
+        .padding(.all, 5)
+        .background(Color.white)
+        .cornerRadius(15)
+        .shadow(radius: 100)
     }
 }
 
 
-
 struct BodyView : View {
     
-//    @EnvironmentObject var cards: Cards
     @State var scrolled = 1
-    @State var hero = false
-    
-    @State var data = [
-        Card(id: 1, name: "Morrisons", image: "Morrisons-front", offx: 0, offy: 0, degree: 0, expand: false),
-        Card(id: 2, name: "Boots", image: "Boots-front", offx: 0, offy: 0, degree: 0, expand: false),
-        Card(id: 3, name: "Tesco", image: "Tesco-front", offx: 0, offy: 0, degree: 0, expand: false),
-        Card(id: 4, name: "Iceland", image: "Iceland-front", offx: 0, offy: 0, degree: 0, expand: false),
-        Card(id: 5, name: "M&S", image: "M&S-front", offx: 0, offy: 0, degree: 0, expand: false),
-        Card(id: 6, name: "Nectar", image: "Nectar-front", offx: 0, offy: 0, degree: 0, expand: false),
-        Card(id: 7, name: "Holland&Barrett", image: "Holland&Barrett-front", offx: 0, offy: 0, degree: 0, expand: false),
-        Card(id: 8, name: "Superdrug", image: "Superdrug-front", offx: 0, offy: 0, degree: 0, expand: false),
-    ]
     
     
+    @Binding var data : [Card]
+    @Binding var hide : Bool
+    @Binding var search : String
     
     var body: some View {
-        
-        VStack {
+ 
+        ScrollView(.vertical, showsIndicators: false){
             
-            ScrollView(.vertical, showsIndicators: false){
+            VStack{
                 
-                VStack{
-                    
-                    VStack(spacing: 0) {
-                        TopView()
+                VStack(spacing: 0) {
+
+                    ForEach(0..<data.count) { card in
                         
-                        ForEach(0..<data.count) { card in
+//                            ForEach(data[card].name.filter {self.search.isEmpty ? true : data[card].name.localizedCaseInsensitiveContains(self.search)}, id : \.self) { name in
+//                                
+//                            }
+                        
+                        GeometryReader{ geo in
                             
-                            GeometryReader{ geo in
+                            CardView(data: $data[card], hide: $hide, dimens: geo)
                                 
-                                CardView(data: $data[card], hero: $hero, dimens: geo)
+                                .offset(y: data[card].expand ? -geo.frame(in: .global).minY : 0)
+                                .opacity(hide ? (data[card].expand ? 1 : 0) : 1)
+                                .onTapGesture {
                                     
-                                    .offset(y: data[card].expand ? -geo.frame(in: .global).minY : 0)
-                                    .opacity(hero ? (data[card].expand ? 1 : 0) : 1)
-                                    
-                                    .onTapGesture {
-                                        
-                                        withAnimation(.interactiveSpring(response: 0.5, dampingFraction: 0.8, blendDuration: 0)){
-                                            print(UIScreen.main.bounds.height)
-                                            if !data[card].expand {
-                                                hero.toggle()
-                                                data[card].expand.toggle()
-                                            }
+                                    withAnimation(.interactiveSpring(response: 0.5, dampingFraction: 0.8, blendDuration: 0)){
+                                        print(UIScreen.main.bounds.height)
+                                        if !data[card].expand {
+                                            hide.toggle()
+                                            data[card].expand.toggle()
+//                                            data[card].name.localizedCaseInsensitiveContains(search)
                                         }
                                     }
-                            }
-                            .frame(height: UIScreen.main.bounds.height / (
-                                    data[card].expand ? 1 : (UIScreen.main.bounds.height < 750 ? 2.8 : 3.5) )
-                            )
-                            .simultaneousGesture(DragGesture(minimumDistance: data[card].expand ? 0 : 500).onChanged({ (_) in
-                                print("dragging")
-                                
-                            }))
+                                }
                         }
+                        .frame(height: UIScreen.main.bounds.height / (
+                                data[card].expand ? 1 : (UIScreen.main.bounds.height < 750 ? 2.8 : 3.5) )
+                        )
+                        .simultaneousGesture(DragGesture(minimumDistance: data[card].expand ? 0 : 500).onChanged({ (_) in
+                            print("dragging")
+                            
+                        }))
                     }
                 }
             }
+        
         }
     }
 }
@@ -119,12 +123,13 @@ struct BodyView : View {
 struct CardView : View {    // clickable
     
     @Binding var data   : Card
-    @Binding var hero   : Bool
+    @Binding var hide   : Bool
     @State   var dimens : GeometryProxy
     
     var body: some View {
         
         ZStack(alignment: .topTrailing) {
+            
             VStack {
                 
                 Image(data.image)               // front card
@@ -152,7 +157,7 @@ struct CardView : View {    // clickable
                 Button(action: {
                     withAnimation(.interactiveSpring(response: 0.5, dampingFraction: 0.8, blendDuration: 0)){
                         data.expand.toggle()
-                        hero.toggle()
+                        hide.toggle()
                     }
                 }) {
                     Image(systemName: "xmark")
@@ -174,9 +179,6 @@ struct Card : Identifiable {
     var id: Int
     var name : String
     var image : String
-    var offx: CGFloat
-    var offy: CGFloat
-    var degree : Double
     var expand : Bool
 }
 

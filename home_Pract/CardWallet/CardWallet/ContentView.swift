@@ -4,23 +4,15 @@
 //
 //  Created by Tuan on 26/02/2021.
 //
-
+import Foundation
 import SwiftUI
 
 struct ContentView: View {
     @State private var search : String = ""
     @State var hide = false
-    @State var data = [
-        Card(id: 1, name: "Morrisons", image: "Morrisons-front", expand: false),
-        Card(id: 2, name: "Boots", image: "Boots-front", expand: false),
-        Card(id: 3, name: "Tesco", image: "Tesco-front", expand: false),
-        Card(id: 4, name: "Iceland", image: "Iceland-front", expand: false),
-        Card(id: 5, name: "M&S", image: "M&S-front", expand: false),
-        Card(id: 6, name: "Nectar", image: "Nectar-front", expand: false),
-        Card(id: 7, name: "Holland&Barrett", image: "Holland&Barrett-front", expand: false),
-        Card(id: 8, name: "Superdrug", image: "Superdrug-front", expand: false),
-    ]
-    
+    @State var data : Cards
+
+
     var body: some View {
         
         VStack(spacing: 0) {
@@ -37,7 +29,7 @@ struct ContentView: View {
 
 struct TopView : View {
     
-    @Binding var data : [Card]
+    @Binding var data : Cards
     @Binding var search : String
     
     var body: some View {
@@ -67,62 +59,58 @@ struct TopView : View {
 struct BodyView : View {
     
     @State var scrolled = 1
-    
-    
-    @Binding var data : [Card]
+    @Binding var data : Cards
     @Binding var hide : Bool
     @Binding var search : String
     
+    
+//    func getSearchByName() -> Card {
+//        guard !search.isEmpty else { return data.brands[Int] }
+//        return data.brands.filter{ $0.name.containsCaseInsensitive(search) }
+//    }
     var body: some View {
  
         ScrollView(.vertical, showsIndicators: false){
             
-            VStack{
-                
-                VStack(spacing: 0) {
+            VStack(spacing: 0) {
 
-                    ForEach(0..<data.count) { card in
-                        
-//                            ForEach(data[card].name.filter {self.search.isEmpty ? true : data[card].name.localizedCaseInsensitiveContains(self.search)}, id : \.self) { name in
-//                                
-//                            }
-                        
-                        GeometryReader{ geo in
+                ForEach(data.brands.filter ({
+                    search.isEmpty ? true : $0.name.localizedCaseInsensitiveContains(search)
+                }), id: \.self) { card in
+                    
+                    GeometryReader{ geo in
                             
-                            CardView(data: $data[card], hide: $hide, dimens: geo)
+                        CardView(data: $data.brands[card.id-1], hide: $hide, dimens: geo)
+                            
+                            .offset(y: card.expand ? -geo.frame(in: .global).minY : 0)
+                            .opacity(hide ? (card.expand ? 1 : 0) : 1)
+                            .onTapGesture {
                                 
-                                .offset(y: data[card].expand ? -geo.frame(in: .global).minY : 0)
-                                .opacity(hide ? (data[card].expand ? 1 : 0) : 1)
-                                .onTapGesture {
-                                    
-                                    withAnimation(.interactiveSpring(response: 0.5, dampingFraction: 0.8, blendDuration: 0)){
-                                        print(UIScreen.main.bounds.height)
-                                        if !data[card].expand {
-                                            hide.toggle()
-                                            data[card].expand.toggle()
-//                                            data[card].name.localizedCaseInsensitiveContains(search)
-                                        }
+                                withAnimation(.interactiveSpring(response: 0.5, dampingFraction: 0.8, blendDuration: 0)){
+                                    print(data.brands[card.id-1])
+                                    if !card.expand {
+                                        hide.toggle()
+                                        data.brands[card.id-1].expand.toggle()
                                     }
                                 }
-                        }
-                        .frame(height: UIScreen.main.bounds.height / (
-                                data[card].expand ? 1 : (UIScreen.main.bounds.height < 750 ? 2.8 : 3.5) )
-                        )
-                        .simultaneousGesture(DragGesture(minimumDistance: data[card].expand ? 0 : 500).onChanged({ (_) in
-                            print("dragging")
-                            
-                        }))
+                            }
                     }
+                    .frame(height: UIScreen.main.bounds.height / (
+                            card.expand ? 1 : (UIScreen.main.bounds.height < 750 ? 2.8 : 3.5) )
+                    )
+                    .simultaneousGesture(DragGesture(minimumDistance: card.expand ? 0 : 500).onChanged({ (_) in
+                        print("dragging")
+                        
+                    }))
                 }
             }
-        
         }
     }
 }
 
 struct CardView : View {    // clickable
     
-    @Binding var data   : Card
+    @Binding var data : Card
     @Binding var hide   : Bool
     @State   var dimens : GeometryProxy
     
@@ -175,15 +163,17 @@ struct CardView : View {    // clickable
 }
 
 
-struct Card : Identifiable {
-    var id: Int
-    var name : String
-    var image : String
-    var expand : Bool
-}
+//struct Card : Identifiable {
+//    var id: Int
+//    var name : String
+//    var image : String
+//    var expand : Bool
+//}
 
 struct ContentView_Previews: PreviewProvider {
+    
     static var previews: some View {
-        ContentView()
+        let cards = Cards()
+        ContentView(data: cards)
     }
 }

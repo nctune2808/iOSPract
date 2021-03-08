@@ -44,15 +44,6 @@ class Cards : ObservableObject {
     
     init() {
         self.brands = []
-        
-        
-        
-        
-        
-        
-        
-        
-        
             
         let card1 = Card(id: 1, name: "Morrisons", image: "Morrisons-front", expand: false)
         self.brands.append(card1)

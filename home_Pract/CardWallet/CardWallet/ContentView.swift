@@ -11,65 +11,137 @@ struct ContentView: View {
     @State private var search : String = ""
     @State var hide = false
     @State var data : Cards
-
+    @State var selectedTab = "creditcard.circle.fill"
 
     var body: some View {
         
-        VStack(spacing: 0) {
+        ZStack(alignment: Alignment(horizontal: .center,vertical: .bottom)) {
             
-            if !hide { TopView(data: $data, search: $search) }   // header
+                TabView(selection: $selectedTab) {
+                    WalletView(data: $data, hide: $hide, search: $search)  // body
+                        .tag("creditcard.circle.fill")
+                        
+                    CameraView()
+                        .tag("camera.circle.fill")
+                }
+                
+                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                .edgesIgnoringSafeArea(.all)
+                
+                if !hide { NavigationBar(selectedTab: $selectedTab) }      // footer
+        
+        }
+    }
+}
+
+var tabs = ["creditcard.circle.fill","camera.circle.fill"]
+
+struct TabButton: View {
+    
+    var icon : String
+    @Binding var selectedTab: String
+    
+    var body: some View {
+        
+        Button(action: {selectedTab = icon}) {
+            Image(systemName: icon)
+                .renderingMode(.template)
+                .foregroundColor(selectedTab == icon ? Color.blue : Color.black.opacity(0.4))
+                .padding()
+        }
+    }
+}
+
+struct NavigationBar: View {
+    
+    @Binding var selectedTab: String
+    
+    var body: some View {
             
-            BodyView(data: $data, hide: $hide, search: $search)  // body
+        HStack{
+            ForEach(tabs, id: \.self){ icon in
+                
+                TabButton(icon: icon, selectedTab: $selectedTab)
+                
+                if icon != tabs.last {
+//                    Spacer()
+                }
+            }
+        }
+        .frame(width: UIScreen.main.bounds.width / 1.1, height: 45)
+        .padding(.horizontal, 10)
+        .background(Color.white)
+        .clipShape(Capsule())
+        .shadow(radius: 50)
             
-//            if !hide { BottomView() }         // footer
+    }
+    
+}
+
+struct CameraView : View {
+    
+    var body: some View {
+        
+        VStack {
+            Text("Camera")
         }
         
     }
 }
 
-struct TopView : View {
+struct WalletView : View {
+    
+    @Binding var data : Cards
+    @Binding var hide : Bool
+    @Binding var search : String
+    
+    var body: some View {
+ 
+        ZStack(alignment: Alignment(horizontal: .center, vertical: .top)) {
+            
+            BodyWalletView (data: $data, hide: $hide, search: $search)
+            
+            if !hide { TopWalletView(data: $data, search: $search) }   // header
+        }
+        
+    }
+}
+
+struct TopWalletView : View {
     
     @Binding var data : Cards
     @Binding var search : String
     
     var body: some View {
         
-        HStack {
+        HStack (spacing: 0) {
         
             SearchBar(text: $search)
 
             Button(action: {
-                
+
             }, label: {
                 Image(systemName: "barcode.viewfinder")
                     .resizable()
                     .frame(width: 30, height: 25)
-                    .padding(.trailing,10)
             })
         }
-        .frame(width: UIScreen.main.bounds.width / 1.05, height: 40)
-        .padding(.all, 5)
+        .padding(.horizontal, 15)
         .background(Color.white)
-        .cornerRadius(15)
-        .shadow(radius: 100)
+        
     }
 }
 
-
-struct BodyView : View {
+struct BodyWalletView : View{
     
     @State var scrolled = 1
     @Binding var data : Cards
     @Binding var hide : Bool
     @Binding var search : String
+    @State var edge = UIApplication.shared.windows.first?.safeAreaInsets
     
-    
-//    func getSearchByName() -> Card {
-//        guard !search.isEmpty else { return data.brands[Int] }
-//        return data.brands.filter{ $0.name.containsCaseInsensitive(search) }
-//    }
     var body: some View {
- 
+        
         ScrollView(.vertical, showsIndicators: false){
             
             VStack(spacing: 0) {
@@ -80,7 +152,7 @@ struct BodyView : View {
                     
                     GeometryReader{ geo in
                             
-                        CardView(data: $data.brands[card.id-1], hide: $hide, dimens: geo)
+                        DetailCardView(data: $data.brands[card.id-1], hide: $hide, dimens: geo)
                             
                             .offset(y: card.expand ? -geo.frame(in: .global).minY : 0)
                             .opacity(hide ? (card.expand ? 1 : 0) : 1)
@@ -104,11 +176,15 @@ struct BodyView : View {
                     }))
                 }
             }
+            .padding(.top, edge!.top + 10)
         }
+        .background(Color.black.opacity(0.1).ignoresSafeArea(.all, edges: .all))
+        
     }
+    
 }
 
-struct CardView : View {    // clickable
+struct DetailCardView : View {    // clickable
     
     @Binding var data : Card
     @Binding var hide   : Bool
@@ -161,14 +237,6 @@ struct CardView : View {    // clickable
         
     }
 }
-
-
-//struct Card : Identifiable {
-//    var id: Int
-//    var name : String
-//    var image : String
-//    var expand : Bool
-//}
 
 struct ContentView_Previews: PreviewProvider {
     

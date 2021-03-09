@@ -16,28 +16,6 @@ struct Card : Hashable {
     var expand : Bool
 }
 
-//var CardsArr = [
-//    Card(id: 1, name: "Morrisons", image: "Morrisons-front", offx: 0, offy: 0, degree: 0, expand: false),
-//    Card(id: 2, name: "Boots", image: "Boots-front", offx: 0, offy: 0, degree: 0, expand: false),
-//    Card(id: 3, name: "Tesco", image: "Tesco-front", offx: 0, offy: 0, degree: 0, expand: false),
-//    Card(id: 4, name: "Iceland", image: "Iceland-front", offx: 0, offy: 0, degree: 0, expand: false),
-//    Card(id: 5, name: "M&S", image: "M&S-front", offx: 0, offy: 0, degree: 0, expand: false),
-//    Card(id: 6, name: "Nectar", image: "Nectar-front", offx: 0, offy: 0, degree: 0, expand: false),
-//    Card(id: 7, name: "Holland&Barrett", image: "Holland&Barrett-front", offx: 0, offy: 0, degree: 0, expand: false),
-//    Card(id: 8, name: "Superdrug", image: "Superdrug-front", offx: 0, offy: 0, degree: 0, expand: false),
-//]
-
-//@State var data = [
-//    Card(id: 1, name: "Morrisons", image: "Morrisons-front", expand: false),
-//    Card(id: 2, name: "Boots", image: "Boots-front", expand: false),
-//    Card(id: 3, name: "Tesco", image: "Tesco-front", expand: false),
-//    Card(id: 4, name: "Iceland", image: "Iceland-front", expand: false),
-//    Card(id: 5, name: "M&S", image: "M&S-front", expand: false),
-//    Card(id: 6, name: "Nectar", image: "Nectar-front", expand: false),
-//    Card(id: 7, name: "Holland&Barrett", image: "Holland&Barrett-front", expand: false),
-//    Card(id: 8, name: "Superdrug", image: "Superdrug-front", expand: false),
-//]
-
 class Cards : ObservableObject {
     
     @Published var brands = [Card]()
@@ -68,26 +46,7 @@ class Cards : ObservableObject {
         
         let card8 = Card(id: 8, name: "Superdrug", image: "Superdrug-front", expand: false)
         self.brands.append(card8)
-        
-        
-        
-        
-        
+
     }
-    
-//    func update(card: Card, offx: CGFloat, offy: CGFloat, degree: Double) {
-//        for i in 0..<brands.count {
-//            if brands[i].id == card.id {
-//                brands[i].offx = offx
-//                brands[i].offy = offy
-//                brands[i].degree = degree
-//                last = i
-//            }
-//        }
-//    }
-//
-//    func goBack(index: Int) {
-//        brands[index].offx = 0
-//    }
     
 }

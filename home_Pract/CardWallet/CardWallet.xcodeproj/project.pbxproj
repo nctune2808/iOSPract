@@ -15,6 +15,8 @@
 		112D70DE25E90FBE0021BF57 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 112D70DC25E90FBE0021BF57 /* LaunchScreen.storyboard */; };
 		112D70EF25E944C20021BF57 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112D70EE25E944C20021BF57 /* Card.swift */; };
 		1149E08B25F2766900F46F14 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1149E08A25F2766900F46F14 /* SearchBar.swift */; };
+		115EE47725F82D3300471844 /* WalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115EE47625F82D3300471844 /* WalletView.swift */; };
+		115EE47A25F82D7800471844 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115EE47925F82D7800471844 /* CameraView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +30,8 @@
 		112D70DF25E90FBE0021BF57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		112D70EE25E944C20021BF57 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		1149E08A25F2766900F46F14 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		115EE47625F82D3300471844 /* WalletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletView.swift; sourceTree = "<group>"; };
+		115EE47925F82D7800471844 /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +64,7 @@
 		112D70D025E90FBD0021BF57 /* CardWallet */ = {
 			isa = PBXGroup;
 			children = (
+				115EE46725F7F72900471844 /* View */,
 				112D70E825E9440D0021BF57 /* Model */,
 				112D70D125E90FBD0021BF57 /* AppDelegate.swift */,
 				112D70D325E90FBD0021BF57 /* SceneDelegate.swift */,
@@ -87,6 +92,15 @@
 				112D70EE25E944C20021BF57 /* Card.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		115EE46725F7F72900471844 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				115EE47625F82D3300471844 /* WalletView.swift */,
+				115EE47925F82D7800471844 /* CameraView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -160,10 +174,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				112D70D225E90FBD0021BF57 /* AppDelegate.swift in Sources */,
+				115EE47A25F82D7800471844 /* CameraView.swift in Sources */,
 				112D70D425E90FBD0021BF57 /* SceneDelegate.swift in Sources */,
 				1149E08B25F2766900F46F14 /* SearchBar.swift in Sources */,
 				112D70D625E90FBD0021BF57 /* ContentView.swift in Sources */,
 				112D70EF25E944C20021BF57 /* Card.swift in Sources */,
+				115EE47725F82D3300471844 /* WalletView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

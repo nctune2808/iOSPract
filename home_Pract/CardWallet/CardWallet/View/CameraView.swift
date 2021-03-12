@@ -10,51 +10,91 @@ import SwiftUI
 
 struct CameraView : View {
     
+    @StateObject var camera = CameraViewModel()
+    
     var body: some View {
         
-        VStack {
-            Text("Camera")
-                .padding()
-                .cornerRadius(20)
-        }
-        
-        .contextMenu{
-            VStack {
-                Button(action: {
-                    print("Wallet")
-                }, label: {
-                    HStack{
-                        Text("Wallet")
-                        Image(systemName: "creditcard.circle.fill")
-                    }
-                })
+        ZStack{
+            Camera(camera: camera)
+                .ignoresSafeArea(.all, edges: .all)
+            
+            VStack{
+                Spacer()
                 
-                Button(action: {
-                    print("Camera")
-                }, label: {
-                    HStack{
-                        Text("Camera")
-                        Image(systemName: "camera.circle.fill")
+                HStack{
+                    
+                    if camera.isTaken{
+                        Button(action: {
+                            if !camera.isSaved{
+                                camera.savePic()
+                            }
+                        }, label: {
+                            Text(camera.isSaved ? "Saved": "Save")
+                                .foregroundColor(.black)
+                                .fontWeight(.semibold)
+                                .padding(.vertical,10)
+                                .padding(.horizontal,20)
+                                .background(Color.white)
+                                .clipShape(Capsule())
+                        })
+                        .padding()
+                        
+                        Spacer()
+                        
+                        Button(action: {
+                            camera.retakePic()
+                        }, label: {
+                            Text("Cancel")
+                                .foregroundColor(.black)
+                                .fontWeight(.semibold)
+                                .padding(.vertical,10)
+                                .padding(.horizontal,20)
+                                .background(Color.white)
+                                .clipShape(Capsule())
+                        })
+                        .padding()
+                        
+                    } else {
+                        Button(action: {
+                            camera.takePic()
+                        }, label: {
+                            ZStack{
+                                Circle()
+                                    .fill(Color.white)
+                                    .frame(width: 65, height: 65)
+                                
+                                Circle()
+                                    .stroke(Color.white, lineWidth: 2)
+                                    .frame(width: 75, height: 75)
+                            }
+                        })
                     }
-                })
-                
+                }
             }
+            
         }
+        .onAppear(perform: {
+            camera.checkCam()
+        })
         
-//        .navigationBarItems(trailing: Menu(content: {
-//            Button(action: {
-//                withAnimation {
-//                    Text("ddd")
-//                }
-//            }, label: {
-//                HStack{
-//                    Text("Home")
-//                    Image(systemName: "house.fill")
-//                }
-//            })
-//        }, label: {
-//            Image(systemName: "line.horizontal.3")
-//        }))
+//        VStack {
+//            if cameraData.imageData.count == 0 {
+//                Text("Pick an image to process!!!")
+//            }
+//            Button(action: {cameraData.imagePicker.toggle()}) {
+//                Image(systemName: "photo")
+//                    .font(.title2)
+//            }
+//        }
+//        .toolbar {
+//            ToolbarItem(placement: .navigationBarTrailing) {
+//
+//            }
+//        }
+//        .sheet(isPresented: $cameraData.imagePicker) {
+//            ImagePicker(picker: $cameraData.imagePicker, imageData: $cameraData.imageData)
+//        }
+        
         
     }
 }

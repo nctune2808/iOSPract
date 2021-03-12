@@ -17,22 +17,20 @@ struct ContentView: View {
         
         ZStack(alignment: Alignment(horizontal: .center,vertical: .bottom)) {
             
-                TabView(selection: $selectedTab) {
-                    WalletView(data: $data, hide: $hide, search: $search)  // body
-                        .tag("creditcard.circle.fill")
-                        
-                    CameraView()
-                        .tag("camera.circle.fill")
-                }
-                
-                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-  
-                .edgesIgnoringSafeArea(.all)
-                .onAppear(perform: {
-                    UIScrollView.appearance().bounces = false
-                 })
+            TabView(selection: $selectedTab) {
+                WalletView(data: $data, hide: $hide, search: $search)  // body
+                    .tag("creditcard.circle.fill")
+                CameraView()
+                    .tag("camera.circle.fill")
+            }
+            .ignoresSafeArea(.all, edges: .all)
+//            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
             
-                if !hide { NavigationBar(selectedTab: $selectedTab) }      // footer
+//            .onAppear(perform: {
+//                UIScrollView.appearance().bounces = false
+//             })
+        
+            if !hide { NavigationBar(selectedTab: $selectedTab) }      // footer
         
         }
     }
@@ -75,11 +73,9 @@ struct NavigationBar: View {
                 
             }
         }
-        .frame(width: UIScreen.main.bounds.width / 1.1, height: 50)
+        .frame(height: 45)
         .padding(.horizontal, 10)
-        .background(Color.white)
-        .clipShape(Capsule())
-        .shadow(radius: 50)
+        
             
     }
     

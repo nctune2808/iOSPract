@@ -16,11 +16,18 @@ struct WalletView : View {
     var body: some View {
  
         ZStack(alignment: Alignment(horizontal: .center, vertical: .top)) {
+//            Color.black
+//                .ignoresSafeArea(.all, edges: .all)
             
             BodyWalletView (data: $data, hide: $hide, search: $search)
             
-            if !hide { TopWalletView(data: $data, search: $search) }   // header
+            if !hide {
+                TopWalletView(data: $data, search: $search)
+                    .padding(.horizontal,5)
+                    .shadow(radius: 50)
+            }   // header
         }
+        
         
     }
 }
@@ -42,11 +49,12 @@ struct TopWalletView : View {
                 Image(systemName: "barcode.viewfinder")
                     .resizable()
                     .frame(width: 30, height: 25)
+                    .padding(.trailing, 10)
             })
         }
-        .padding(.horizontal, 15)
+        .frame(height: 50)
         .background(Color.white)
-        
+        .cornerRadius(20)
     }
 }
 

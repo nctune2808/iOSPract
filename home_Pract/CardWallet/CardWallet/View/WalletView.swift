@@ -12,22 +12,36 @@ struct WalletView : View {
     @Binding var data : Cards
     @Binding var hide : Bool
     @Binding var search : String
+    @Binding var offset: CGFloat
     
     var body: some View {
  
-        ZStack(alignment: Alignment(horizontal: .center, vertical: .top)) {
-//            Color.black
-//                .ignoresSafeArea(.all, edges: .all)
-            
-            BodyWalletView (data: $data, hide: $hide, search: $search)
-            
-            if !hide {
-                TopWalletView(data: $data, search: $search)
-                    .padding(.horizontal,5)
-                    .shadow(radius: 50)
-            }   // header
-        }
+//        ZStack(alignment: Alignment(horizontal: .center, vertical: .top)) {
+//
+//            BodyWalletView (data: $data, hide: $hide, search: $search)
+//
+//            if !hide {
+//                TopWalletView(data: $data, search: $search)
+//                    .padding(.horizontal,5)
+//                    .shadow(radius: 50)
+//            }   // header
+//        }
+////        .padding(.top, edges?.top ?? -15)
         
+        VStack{
+            BodyWalletView (data: $data, hide: $hide, search: $search)
+        }
+        .overlay(
+            VStack{
+                if !hide {
+                    TopWalletView(data: $data, search: $search)
+                        .padding(.top, edges?.top ?? 15)
+                        .padding(.horizontal,8)
+                }
+            }
+            , alignment: .top
+                
+        )
         
     }
 }
@@ -55,7 +69,11 @@ struct TopWalletView : View {
         .frame(height: 50)
         .background(Color.white)
         .cornerRadius(20)
+        .shadow(radius: 50)
+        
     }
+    
+    
 }
 
 struct BodyWalletView : View{
@@ -103,7 +121,7 @@ struct BodyWalletView : View{
             }
             .padding(.top, UIScreen.main.bounds.height / (UIScreen.main.bounds.height < 750 ? 10 : 15))
         }
-        .background(Color.black.opacity(0.1).ignoresSafeArea(.all, edges: .all))
+//        .background(Color.black.opacity(0.1).ignoresSafeArea(.all, edges: .all))
         
     }
     

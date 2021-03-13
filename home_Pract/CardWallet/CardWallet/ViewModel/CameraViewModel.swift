@@ -15,7 +15,7 @@ class CameraViewModel : NSObject, ObservableObject, AVCapturePhotoCaptureDelegat
     
     @Published var isTaken = false
     @Published var session = AVCaptureSession()
-    @Published var aleart  = false
+    @Published var alert  = false
     @Published var output  = AVCapturePhotoOutput()
     @Published var preview : AVCaptureVideoPreviewLayer!
     @Published var isSaved = false
@@ -33,7 +33,7 @@ class CameraViewModel : NSObject, ObservableObject, AVCapturePhotoCaptureDelegat
                 }
             }
         case .denied:
-            self.aleart.toggle()
+            self.alert.toggle()
             return
             
         default:
@@ -45,7 +45,7 @@ class CameraViewModel : NSObject, ObservableObject, AVCapturePhotoCaptureDelegat
         
         do {
             self.session.beginConfiguration()
-            let device = AVCaptureDevice.default(.builtInDualCamera, for: .video, position: .back)
+            let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back)
             let input  = try AVCaptureDeviceInput(device: device!)
             
             if self.session.canAddInput(input){

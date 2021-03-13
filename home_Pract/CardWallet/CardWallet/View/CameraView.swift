@@ -11,10 +11,13 @@ import SwiftUI
 struct CameraView : View {
     
     @StateObject var camera = CameraViewModel()
-    
+
     var body: some View {
         
         ZStack{
+            
+            
+            
             Camera(camera: camera)
                 .ignoresSafeArea(.all, edges: .all)
             
@@ -76,6 +79,20 @@ struct CameraView : View {
         .onAppear(perform: {
             camera.checkCam()
         })
+        .alert(isPresented: $camera.alert){
+            Alert(title: Text("Please, Enable Camera Access"))
+        }
+//        .onChange(of: offset, perform: { value in
+//
+//
+//            if value == 0 && !camera.session.isRunning {
+//                camera.session.startRunning()
+//            } else {
+//                if camera.session.isRunning {
+//                    camera.session.stopRunning()
+//                }
+//            }
+//        })
         
 //        VStack {
 //            if cameraData.imageData.count == 0 {

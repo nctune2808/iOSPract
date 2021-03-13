@@ -19,7 +19,7 @@
 		1148D66625FBD22400F0E6DD /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1148D66525FBD22400F0E6DD /* Camera.swift */; };
 		1148D66B25FC235D00F0E6DD /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1148D66A25FC235D00F0E6DD /* AccountView.swift */; };
 		1148D66E25FC335000F0E6DD /* TabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1148D66D25FC335000F0E6DD /* TabViewModel.swift */; };
-		1149E08B25F2766900F46F14 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1149E08A25F2766900F46F14 /* SearchBar.swift */; };
+		1149E08B25F2766900F46F14 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1149E08A25F2766900F46F14 /* SearchViewModel.swift */; };
 		115EE47725F82D3300471844 /* WalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115EE47625F82D3300471844 /* WalletView.swift */; };
 		115EE47A25F82D7800471844 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115EE47925F82D7800471844 /* CameraView.swift */; };
 /* End PBXBuildFile section */
@@ -39,7 +39,7 @@
 		1148D66525FBD22400F0E6DD /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		1148D66A25FC235D00F0E6DD /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		1148D66D25FC335000F0E6DD /* TabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewModel.swift; sourceTree = "<group>"; };
-		1149E08A25F2766900F46F14 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		1149E08A25F2766900F46F14 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		115EE47625F82D3300471844 /* WalletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletView.swift; sourceTree = "<group>"; };
 		115EE47925F82D7800471844 /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -84,7 +84,6 @@
 				112D70DC25E90FBE0021BF57 /* LaunchScreen.storyboard */,
 				112D70DF25E90FBE0021BF57 /* Info.plist */,
 				112D70D925E90FBE0021BF57 /* Preview Content */,
-				1149E08A25F2766900F46F14 /* SearchBar.swift */,
 			);
 			path = CardWallet;
 			sourceTree = "<group>";
@@ -112,6 +111,7 @@
 			children = (
 				1148D65E25FBB52800F0E6DD /* CameraViewModel.swift */,
 				1148D66D25FC335000F0E6DD /* TabViewModel.swift */,
+				1149E08A25F2766900F46F14 /* SearchViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -202,7 +202,7 @@
 				1148D66325FBB58700F0E6DD /* ImagePicker.swift in Sources */,
 				1148D66E25FC335000F0E6DD /* TabViewModel.swift in Sources */,
 				1148D66B25FC235D00F0E6DD /* AccountView.swift in Sources */,
-				1149E08B25F2766900F46F14 /* SearchBar.swift in Sources */,
+				1149E08B25F2766900F46F14 /* SearchViewModel.swift in Sources */,
 				112D70D625E90FBD0021BF57 /* ContentView.swift in Sources */,
 				1148D66625FBD22400F0E6DD /* Camera.swift in Sources */,
 				1148D65F25FBB52800F0E6DD /* CameraViewModel.swift in Sources */,

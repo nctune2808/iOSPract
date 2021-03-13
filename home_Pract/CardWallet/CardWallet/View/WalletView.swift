@@ -47,7 +47,7 @@ struct WalletView : View {
 }
 
 struct TopWalletView : View {
-    
+    @Environment(\.colorScheme) var scheme
     @Binding var data : Cards
     @Binding var search : String
     
@@ -56,7 +56,7 @@ struct TopWalletView : View {
         HStack (spacing: 0) {
         
             SearchBar(text: $search)
-                .border(Color.white)
+                .border(scheme == .dark ? Color.black : Color.white)
             Button(action: {
 
             }, label: {
@@ -67,7 +67,7 @@ struct TopWalletView : View {
             })
         }
         .frame(height: 50)
-        .background(Color.white)
+        .background(scheme == .dark ? Color.black : Color.white)
         .cornerRadius(20)
         .shadow(radius: 50)
         
@@ -119,9 +119,8 @@ struct BodyWalletView : View{
                     }))
                 }
             }
-            .padding(.top, UIScreen.main.bounds.height / (UIScreen.main.bounds.height < 750 ? 10 : 15))
+            .padding(.top, UIScreen.main.bounds.height / 8 )
         }
-//        .background(Color.black.opacity(0.1).ignoresSafeArea(.all, edges: .all))
         
     }
     

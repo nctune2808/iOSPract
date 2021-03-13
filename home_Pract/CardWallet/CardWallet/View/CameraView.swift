@@ -11,12 +11,12 @@ import SwiftUI
 struct CameraView : View {
     
     @StateObject var camera = CameraViewModel()
-
+    @Binding var offset : CGFloat
+    
     var body: some View {
         
         ZStack{
-            
-            
+            Color.black
             
             Camera(camera: camera)
                 .ignoresSafeArea(.all, edges: .all)
@@ -73,44 +73,27 @@ struct CameraView : View {
                         })
                     }
                 }
+//                .padding(.bottom, edges?.bottom ?? 15)
+                .padding(.bottom,80)
             }
-            
         }
         .onAppear(perform: {
             camera.checkCam()
+            
         })
         .alert(isPresented: $camera.alert){
             Alert(title: Text("Please, Enable Camera Access"))
         }
-//        .onChange(of: offset, perform: { value in
-//
-//
-//            if value == 0 && !camera.session.isRunning {
-//                camera.session.startRunning()
-//            } else {
-//                if camera.session.isRunning {
-//                    camera.session.stopRunning()
-//                }
-//            }
-//        })
-        
-//        VStack {
-//            if cameraData.imageData.count == 0 {
-//                Text("Pick an image to process!!!")
-//            }
-//            Button(action: {cameraData.imagePicker.toggle()}) {
-//                Image(systemName: "photo")
-//                    .font(.title2)
-//            }
-//        }
-//        .toolbar {
-//            ToolbarItem(placement: .navigationBarTrailing) {
-//
-//            }
-//        }
-//        .sheet(isPresented: $cameraData.imagePicker) {
-//            ImagePicker(picker: $cameraData.imagePicker, imageData: $cameraData.imageData)
-//        }
+        .onChange(of: offset, perform: { value in
+
+            if value == 0 && !camera.session.isRunning {
+                camera.session.startRunning()
+            } else {
+                if camera.session.isRunning {
+                    camera.session.stopRunning()
+                }
+            }
+        })
         
         
     }

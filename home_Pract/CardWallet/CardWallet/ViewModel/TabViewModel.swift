@@ -34,6 +34,7 @@ struct TabViewModel<Content: View>: UIViewRepresentable {
         scrollView.contentSize = CGSize(width: rect.width * CGFloat(tabs.count), height: rect.height)
         scrollView.contentOffset.x = offset
         scrollView.addSubview(extractView())
+        scrollView.delegate = context.coordinator
         return scrollView
     }
     
@@ -72,7 +73,11 @@ struct TabViewModel<Content: View>: UIViewRepresentable {
         }
         
         func scrollViewDidScroll(_ scrollView: UIScrollView) {
-            parent.offset = scrollView.contentOffset.x
+            
+            DispatchQueue.main.async {
+                self.parent.offset = scrollView.contentOffset.x
+            }
+            
         }
     }
     

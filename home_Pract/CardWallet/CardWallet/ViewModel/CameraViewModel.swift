@@ -9,10 +9,8 @@ import SwiftUI
 import AVFoundation
 
 class CameraViewModel : NSObject, ObservableObject, AVCapturePhotoCaptureDelegate {
-    @Published var imagePicker = false
     
     @Published var imageData = Data(count: 0)
-    
     @Published var isTaken = false
     @Published var session = AVCaptureSession()
     @Published var alert  = false
@@ -65,8 +63,11 @@ class CameraViewModel : NSObject, ObservableObject, AVCapturePhotoCaptureDelegat
     }
     
     func takePic() {
+        
+        self.output.capturePhoto(with: AVCapturePhotoSettings(), delegate: self)
+        
         DispatchQueue.global(qos: .background).async {
-            self.output.capturePhoto(with: AVCapturePhotoSettings(), delegate: self)
+            
             self.session.stopRunning()
             
             DispatchQueue.main.async {
@@ -81,13 +82,14 @@ class CameraViewModel : NSObject, ObservableObject, AVCapturePhotoCaptureDelegat
             DispatchQueue.main.async {
                 withAnimation{self.isTaken.toggle()}
                 self.isSaved = false
+//                self.imageData = Data(count: 0)
             }
         }
     }
     
     func savePic() {
         let image = UIImage(data: self.imageData)!
-        
+
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
         self.isSaved = true
         print("Saved")

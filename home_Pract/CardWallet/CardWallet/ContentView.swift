@@ -43,9 +43,7 @@ struct ContentView: View {
                         NavigationBar(offset: $offset, hide: $hide)
                             .padding(.bottom, edges?.bottom ?? 15)
                             .padding(.horizontal,8)
-                            
-                    }
-                    
+                    }  
                 }
                 
                 

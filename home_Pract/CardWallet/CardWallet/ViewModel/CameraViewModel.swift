@@ -82,7 +82,6 @@ class CameraViewModel : NSObject, ObservableObject, AVCapturePhotoCaptureDelegat
             DispatchQueue.main.async {
                 withAnimation{self.isTaken.toggle()}
                 self.isSaved = false
-//                self.imageData = Data(count: 0)
             }
         }
     }

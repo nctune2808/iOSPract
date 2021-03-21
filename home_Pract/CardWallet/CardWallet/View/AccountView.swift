@@ -10,66 +10,104 @@ import SwiftUI
 struct AccountView: View {
     
     @Binding var offset: CGFloat
-    var body: some View {
-        VStack{
-            HStack{
-                Button(action: {
+    
+    @State private var recognizedText = "Tap button to start scanning"
+    @State private var showingScanningView = false
+       
+       var body: some View {
+               VStack {
+                   ScrollView(.vertical, showsIndicators: false) {
                     
-                }, label: {
-                    Image(systemName: "plus.circle")
-                        .font(.title)
-                        .foregroundColor(.primary)
-                    
-                })
+                       ZStack {
+                           RoundedRectangle(cornerRadius: 20, style: .continuous)
+                               .fill(Color.gray.opacity(0.2))
+
+                        Text(recognizedText)
+                           .padding()
+                       }
+                       .padding()
+                   }
+                   
+                   Spacer()
                 
-                Spacer()
-                
-                Button(action: {
-                    
-                }, label: {
-                    Image(systemName: "message")
-                        .font(.title)
-                        .foregroundColor(.primary)
-                })
-            }
-            .padding(.horizontal)
-            .overlay(
-                Text("USER")
-                    .font(.title2)
-                    .fontWeight(.bold)
-            )
-            
-            ScrollView(.vertical, showsIndicators: false) {
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack{
-                        
-                        Button(action: {}, label: {
-                            Image(systemName: "person.circle.fill")
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: 55, height: 55)
-                                .clipShape(Circle())
-                        })
-                        .overlay(
-                            Image(systemName: "plus.circle.fill")
-                                .font(.title)
-                                .foregroundColor(.blue)
-                                .background(Color.white.clipShape(Circle()))
-                                .offset(x: 8, y: 5)
-                            , alignment: .bottomTrailing
-                        )
-                    }
-                    .padding()
-                }
-                Divider()
-                    .padding(.horizontal)
-                
-                VStack{
-                    
-                }
-            }
-        }
-        .padding(.top, edges?.top ?? 15)
-    }
+                   HStack {
+                       
+                       Button(action: {
+                           self.showingScanningView = true
+                       }) {
+                           Text("Start Scanning")
+                       }
+                       .padding()
+                       .foregroundColor(.white)
+                       .background(Capsule().fill(Color.blue))
+                   }
+                   .padding()
+               }
+               .sheet(isPresented: $showingScanningView) {
+                    ScanDocumentViewModel(recognizedText: self.$recognizedText)
+               }
+           }
+       
+    
+//    var body: some View {
+//        VStack{
+//            HStack{
+//                Button(action: {
+//
+//                }, label: {
+//                    Image(systemName: "plus.circle")
+//                        .font(.title)
+//                        .foregroundColor(.primary)
+//                })
+//
+//                Spacer()
+//
+//                Button(action: {
+//
+//                }, label: {
+//                    Image(systemName: "message")
+//                        .font(.title)
+//                        .foregroundColor(.primary)
+//                })
+//            }
+//            .padding(.horizontal)
+//            .overlay(
+//                Text("USER")
+//                    .font(.title2)
+//                    .fontWeight(.bold)
+//            )
+//
+//            ScrollView(.vertical, showsIndicators: false) {
+//                ScrollView(.horizontal, showsIndicators: false) {
+//                    HStack{
+//
+//                        Button(action: {}, label: {
+//                            Image(systemName: "person.circle.fill")
+//                                .resizable()
+//                                .aspectRatio(contentMode: .fill)
+//                                .frame(width: 55, height: 55)
+//                                .clipShape(Circle())
+//                        })
+//                        .overlay(
+//                            Image(systemName: "plus.circle.fill")
+//                                .font(.title)
+//                                .foregroundColor(.blue)
+//                                .background(Color.white.clipShape(Circle()))
+//                                .offset(x: 8, y: 5)
+//                            , alignment: .bottomTrailing
+//                        )
+//                    }
+//                    .padding()
+//                }
+//                Divider()
+//                    .padding(.horizontal)
+//
+//                VStack{
+//
+//                }
+//            }
+//        }
+//        .padding(.top, edges?.top ?? 15)
+//    }
 }
 

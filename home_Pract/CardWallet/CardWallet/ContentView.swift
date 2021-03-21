@@ -26,9 +26,9 @@ struct ContentView: View {
         
         GeometryReader{ reader in
             let frame = reader.frame(in: .global)
-            TabViewModel (tabs: ["",""], rect: frame, offset: $offset) {
+            TabViewModel (tabs: ["","",""], rect: frame, offset: $offset) {
                 
-//                CameraView(offset: $offset)
+                CameraView(offset: $offset)
                 
                 WalletView(data: $data, hide: $hide, search: $search, offset: $offset)
                 
@@ -43,10 +43,8 @@ struct ContentView: View {
                         NavigationBar(offset: $offset, hide: $hide)
                             .padding(.bottom, edges?.bottom ?? 15)
                             .padding(.horizontal,8)
-                    }  
+                    }
                 }
-                
-                
                 , alignment: .bottom
             )
             .ignoresSafeArea()

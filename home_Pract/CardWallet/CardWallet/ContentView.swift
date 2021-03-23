@@ -28,9 +28,11 @@ struct ContentView: View {
             let frame = reader.frame(in: .global)
             TabViewModel (tabs: ["","",""], rect: frame, offset: $offset) {
                 
-                CameraView(offset: $offset)
+//                CameraView(offset: $offset)
                 
                 WalletView(data: $data, hide: $hide, search: $search, offset: $offset)
+                
+                ItemView(offset: $offset)
                 
                 AccountView(offset: $offset)
                     

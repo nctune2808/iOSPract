@@ -23,6 +23,9 @@
 		115EE47725F82D3300471844 /* WalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115EE47625F82D3300471844 /* WalletView.swift */; };
 		115EE47A25F82D7800471844 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115EE47925F82D7800471844 /* CameraView.swift */; };
 		1174B7162607A3320069B1F7 /* ScanDocumentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1174B7152607A3320069B1F7 /* ScanDocumentViewModel.swift */; };
+		11E3D50626096C7200BB410C /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E3D50526096C7200BB410C /* Item.swift */; };
+		11E3D50A26096C9E00BB410C /* ItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E3D50926096C9E00BB410C /* ItemView.swift */; };
+		11E3D50D26096CA900BB410C /* ItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E3D50C26096CA900BB410C /* ItemViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +47,9 @@
 		115EE47625F82D3300471844 /* WalletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletView.swift; sourceTree = "<group>"; };
 		115EE47925F82D7800471844 /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
 		1174B7152607A3320069B1F7 /* ScanDocumentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanDocumentViewModel.swift; sourceTree = "<group>"; };
+		11E3D50526096C7200BB410C /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		11E3D50926096C9E00BB410C /* ItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemView.swift; sourceTree = "<group>"; };
+		11E3D50C26096CA900BB410C /* ItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +110,7 @@
 				112D70EE25E944C20021BF57 /* Card.swift */,
 				1148D66225FBB58700F0E6DD /* ImagePicker.swift */,
 				1148D66525FBD22400F0E6DD /* Camera.swift */,
+				11E3D50526096C7200BB410C /* Item.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -115,6 +122,7 @@
 				1148D66D25FC335000F0E6DD /* TabViewModel.swift */,
 				1149E08A25F2766900F46F14 /* SearchViewModel.swift */,
 				1174B7152607A3320069B1F7 /* ScanDocumentViewModel.swift */,
+				11E3D50C26096CA900BB410C /* ItemViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -125,6 +133,7 @@
 				115EE47625F82D3300471844 /* WalletView.swift */,
 				115EE47925F82D7800471844 /* CameraView.swift */,
 				1148D66A25FC235D00F0E6DD /* AccountView.swift */,
+				11E3D50926096C9E00BB410C /* ItemView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -203,14 +212,17 @@
 				115EE47A25F82D7800471844 /* CameraView.swift in Sources */,
 				112D70D425E90FBD0021BF57 /* SceneDelegate.swift in Sources */,
 				1148D66325FBB58700F0E6DD /* ImagePicker.swift in Sources */,
+				11E3D50626096C7200BB410C /* Item.swift in Sources */,
 				1174B7162607A3320069B1F7 /* ScanDocumentViewModel.swift in Sources */,
 				1148D66E25FC335000F0E6DD /* TabViewModel.swift in Sources */,
 				1148D66B25FC235D00F0E6DD /* AccountView.swift in Sources */,
 				1149E08B25F2766900F46F14 /* SearchViewModel.swift in Sources */,
+				11E3D50D26096CA900BB410C /* ItemViewModel.swift in Sources */,
 				112D70D625E90FBD0021BF57 /* ContentView.swift in Sources */,
 				1148D66625FBD22400F0E6DD /* Camera.swift in Sources */,
 				1148D65F25FBB52800F0E6DD /* CameraViewModel.swift in Sources */,
 				112D70EF25E944C20021BF57 /* Card.swift in Sources */,
+				11E3D50A26096C9E00BB410C /* ItemView.swift in Sources */,
 				115EE47725F82D3300471844 /* WalletView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

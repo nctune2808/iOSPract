@@ -9,69 +9,52 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State var myCart = shoppingCart
-    @State var members = memberList
-
+//    @StateObject var productList = ProductViewModel()
+//    @StateObject var membertList = MemberViewModel()
+    
+    
     var body: some View {
-
-        VStack{
-            
-            ForEach(myCart) { item in
-                HStack{
-                    Text(item.name)
-                    Spacer()
-                    Text("\(item.price)")
-                    Spacer()
-                    Text(item.assign)
-                        .contextMenu(ContextMenu(menuItems: {
-                            ForEach(members) { member in
-                                Button(action: {
-                                    if let index = myCart.firstIndex(where: {$0.name == "\(item.name)"}) {
-                                        myCart[index].assign = member.name
-                                        
-                                        if let indexU = members.firstIndex(where: {$0.name == "\(member.name)"}){
-                                            members[indexU].total = myCart[index].price
-                                            print(members[indexU].total)
-                                        }
-                                    }
-                                }, label: {
-                                    Text(member.name)
-                                })
-                            }
-                        }))
-                }
-                .padding()
-            }
+        NavigationView{
+            MemberView()
+                .navigationTitle("Create Member")
         }
+        
+//        ScrollView(.vertical, showsIndicators: false){
+//            LazyVStack(spacing: 0){
+//                ForEach(productList.items) { product in
+//                    ProductView(product: $productList.items[getIndexProduct(item: product)])
+//                }
+//                ForEach(membertList.mems) { member in
+//                    MemberView(member: $membertList.mems[getIndexMember(mem: member)])
+//                }
+                
+               
+//            }
+//        }
+        
+    
+            
+        
+        
+        
     }
+    
+//    func getIndexProduct(item : Product) -> Int {
+//        return productList.items.firstIndex{ (item1) -> Bool in
+//            return item.id == item1.id
+//        } ?? 0
+//    }
+//    
+//    func getIndexMember(mem : Member) -> Int {
+//        return membertList.mems.firstIndex{ (mem1) -> Bool in
+//            return mem.id == mem1.id
+//        } ?? 0
+//    }
+
 }
 
 
-struct Product: Identifiable {
-    var id = UUID()
-    var name : String
-    var price : Double
-    var assign : String     // for people assign
-}
 
-let shoppingCart = [
-    Product(name: "Beef", price: 10, assign : "Select"),
-    Product(name: "Pork", price: 8, assign : "Select"),
-    Product(name: "Milk", price: 6, assign : "Select")
-]
-
-struct User: Identifiable {
-    var id = UUID()
-    var name : String
-    var total : Double
-}
-
-let memberList = [
-    User(name: "A", total: 10),
-    User(name: "B", total: 20),
-    User(name: "C", total: 30),
-    User(name: "D", total: 40)
-]
 
 
 

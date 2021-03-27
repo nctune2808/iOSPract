@@ -8,87 +8,85 @@
 import SwiftUI
 
 struct MemberView: View {
-//    @Binding var member: Member
+    
     @State var create = ""
     @State var memberList : [Member] = []
     
     
     var body: some View {
         
-        VStack(spacing: 50){
-//            Text(member.name)
+        VStack(spacing: 10){
             ScrollView(.vertical, showsIndicators: false){
                 LazyVStack(alignment: .center, spacing: 10){
                     ForEach(memberList.indices, id: \.self){ index in
+                        HStack(spacing: 0){
+                            Text(memberList[index].name)
+                                .padding(.horizontal, 5)
                             Button(action: {
                                 if !memberList.isEmpty{
                                     memberList.remove(at: index)
                                 }
 //                                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-
                             }, label: {
-                                Text(memberList[index].name)
-                                    .padding(.horizontal)
-                                    .padding(.vertical,5)
-                                    .background(Capsule().stroke(Color.black, lineWidth: 1))
-//                                    .lineLimit(1)
-                                    .overlay(
-                                        GeometryReader{ reader -> Color in
-                                            let maxX = reader.frame(in: .global).maxX
-
-                                            if maxX > UIScreen.main.bounds.width - 50 && !memberList[index].isExceeded {
-
-                                                DispatchQueue.main.async {
-
-                                                    memberList[index].isExceeded = true
-                                                    let lastItem = memberList[index]
-                                                    memberList.append(contentsOf: [lastItem])
-                                                    memberList.remove(at: index)
-                                                }
-                                            }
-                                            return Color.clear
-                                        },
-                                        alignment: .trailing
-                                    )
-                                    .clipShape(Capsule())
-                            }
-                            )
+                                Image(systemName: "xmark.circle.fill")
+                                    .padding(.all, 5)
+                            })
+                        }
+                        .background(Capsule().stroke(Color.black, lineWidth: 1))
                     }
                 }
                 .padding()
             }
-            .frame(width: UIScreen.main.bounds.width - 30 ,height: UIScreen.main.bounds.height / 3)
+            .frame(width: UIScreen.main.bounds.width - 30 ,height: UIScreen.main.bounds.height / 2)
             .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray.opacity(0.5),lineWidth: 1.5))
 
 
 
-            TextEditor(text: $create)
+            TextField("Create new member", text: $create)
                 .padding()
-                .frame(height: 150)
                 .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray.opacity(0.5),lineWidth: 1.5))
 
             Button(action: {
-
                 if memberList.isEmpty{
                     memberList.append(contentsOf: [])
                 }
-
                 withAnimation(.default){
                     memberList.append(Member(name: create))
                     create = ""
                 }
-
-
             }, label: {
-                Text("Add Member")
+                Text("Add member")
                     .padding()
                     .frame(maxWidth: .infinity)
-                    .background(Color.purple)
+                    .background(Color.blue)
                     .foregroundColor(Color.white)
                     .cornerRadius(10)
             })
             .disabled(create == "")
             .opacity(create == "" ? 0.5 : 1)
+            
+            NavigationLink(destination: OrderView(memberList: $memberList), label: {
+                Text("Let's share")
+            })
+            .padding()
+            .frame(maxWidth: .infinity)
+            .background(Color.blue)
+            .foregroundColor(Color.white)
+            .cornerRadius(10)
+        
+//            Button(action: {
+//                print(memberList)
+//            }, label: {
+//                Text("Done, Next")
+//                    .padding()
+//                    .frame(maxWidth: .infinity)
+//                    .background(Color.blue)
+//                    .foregroundColor(Color.white)
+//                    .cornerRadius(10)
+//
+//            })
+            
+            
         }
         .padding()
         

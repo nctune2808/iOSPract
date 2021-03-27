@@ -10,6 +10,6 @@ import SwiftUI
 struct Member: Identifiable {
     var id = UUID().uuidString
     var name : String
-    var total : Float = 0
-    var isExceeded = false
+    var total : Float = 0.00
+    
 }

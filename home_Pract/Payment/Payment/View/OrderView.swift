@@ -9,10 +9,13 @@ import SwiftUI
 
 struct OrderView: View {
     
-    @Binding var order : Order
-
+    @Binding var memberList: [Member]
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Button(action: {
+            print(memberList)
+        }, label: {
+            Text("Test Call")
+        })
     }
 
 }

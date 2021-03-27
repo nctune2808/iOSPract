@@ -10,9 +10,8 @@ import SwiftUI
 struct MemberView: View {
 //    @Binding var member: Member
     @State var create = ""
-    @State var memberList : [[Member]] = [
-        [Member(name: "M")]
-    ]
+    @State var memberList : [Member] = []
+    
     
     var body: some View {
         
@@ -21,69 +20,65 @@ struct MemberView: View {
             ScrollView(.vertical, showsIndicators: false){
                 LazyVStack(alignment: .center, spacing: 10){
                     ForEach(memberList.indices, id: \.self){ index in
-                        HStack{
-                            ForEach(memberList[index].indices, id: \.self) { i in
-                            Text(memberList[index][i].name)
-                                .padding(.horizontal)
-                                .padding(.vertical,5)
-                                .background(Capsule().stroke(Color.black, lineWidth: 1.5))
-                                .lineLimit(1)
-                                .overlay(
-                                    GeometryReader{ reader -> Color in
-                                        let maxX = reader.frame(in: .global).maxX
-                                        
-                                        if maxX > UIScreen.main.bounds.width - 50 && !memberList[index][i].isExceeded {
-                                            
-                                            DispatchQueue.main.async {
-                                                
-                                                memberList[index][i].isExceeded = true
-                                                let lastItem = memberList[index][i]
-                                                memberList.append([lastItem])
-                                                memberList[index].remove(at: i)
-                                            }
-                                        }
-                                        return Color.clear
-                                    },
-                                    alignment: .trailing
-                                )
-                                .clipShape(Capsule())
-                                .onTapGesture {
-                                    memberList[index].remove(at: i)
-                                    
-                                    if memberList[index].isEmpty{
-                                        memberList.remove(at: index)
-                                    }
-                                    
-                                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                            Button(action: {
+                                if !memberList.isEmpty{
+                                    memberList.remove(at: index)
                                 }
-                        }
-                        }
+//                                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+
+                            }, label: {
+                                Text(memberList[index].name)
+                                    .padding(.horizontal)
+                                    .padding(.vertical,5)
+                                    .background(Capsule().stroke(Color.black, lineWidth: 1))
+//                                    .lineLimit(1)
+                                    .overlay(
+                                        GeometryReader{ reader -> Color in
+                                            let maxX = reader.frame(in: .global).maxX
+
+                                            if maxX > UIScreen.main.bounds.width - 50 && !memberList[index].isExceeded {
+
+                                                DispatchQueue.main.async {
+
+                                                    memberList[index].isExceeded = true
+                                                    let lastItem = memberList[index]
+                                                    memberList.append(contentsOf: [lastItem])
+                                                    memberList.remove(at: index)
+                                                }
+                                            }
+                                            return Color.clear
+                                        },
+                                        alignment: .trailing
+                                    )
+                                    .clipShape(Capsule())
+                            }
+                            )
                     }
                 }
                 .padding()
             }
             .frame(width: UIScreen.main.bounds.width - 30 ,height: UIScreen.main.bounds.height / 3)
             .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray.opacity(0.5),lineWidth: 1.5))
-            
-        
-    
+
+
+
             TextEditor(text: $create)
                 .padding()
                 .frame(height: 150)
                 .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray.opacity(0.5),lineWidth: 1.5))
-        
+
             Button(action: {
-                
+
                 if memberList.isEmpty{
-                    memberList.append([])
+                    memberList.append(contentsOf: [])
                 }
-                
+
                 withAnimation(.default){
-                    memberList[memberList.count - 1].append(Member(name: create))
+                    memberList.append(Member(name: create))
                     create = ""
                 }
-               
-                
+
+
             }, label: {
                 Text("Add Member")
                     .padding()

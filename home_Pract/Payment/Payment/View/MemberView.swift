@@ -11,7 +11,9 @@ struct MemberView: View {
     
     @State var create = ""
     @State var memberList : [Member] = []
-    
+    @State var productList : [Product] = []
+    var selections : [String] = []
+    var cartList : [Cart] = []
     
     var body: some View {
         
@@ -42,19 +44,11 @@ struct MemberView: View {
 
 
 
-            TextField("Create new member", text: $create)
+            TextField("Create new member", text: $create, onCommit: onCommit)
                 .padding()
                 .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray.opacity(0.5),lineWidth: 1.5))
 
-            Button(action: {
-                if memberList.isEmpty{
-                    memberList.append(contentsOf: [])
-                }
-                withAnimation(.default){
-                    memberList.append(Member(name: create))
-                    create = ""
-                }
-            }, label: {
+            Button(action: { onCommit() }, label: {
                 Text("Add member")
                     .padding()
                     .frame(maxWidth: .infinity)
@@ -65,12 +59,12 @@ struct MemberView: View {
             .disabled(create == "")
             .opacity(create == "" ? 0.5 : 1)
             
-            NavigationLink(destination: OrderView(memberList: $memberList), label: {
+            NavigationLink(destination: OrderView(memberList: $memberList, selections: selections, cartList: cartList), label: {
                 Text("Let's share")
             })
             .padding()
             .frame(maxWidth: .infinity)
-            .background(Color.blue)
+            .background(Color.black.opacity(0.8))
             .foregroundColor(Color.white)
             .cornerRadius(10)
         
@@ -91,6 +85,16 @@ struct MemberView: View {
         .padding()
         
         
+    }
+    
+    func onCommit() {
+        if memberList.isEmpty{
+            memberList.append(contentsOf: [])
+        }
+        withAnimation(.default){
+            memberList.append(Member(name: create))
+            create = ""
+        }
     }
 }
 

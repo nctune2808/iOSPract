@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Member: Identifiable {
+struct Member: Identifiable, Hashable {
     var id = UUID().uuidString
     var name : String
     var total : Float = 0.00

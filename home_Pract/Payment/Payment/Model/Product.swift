@@ -7,9 +7,8 @@
 
 import SwiftUI
 
-struct Product: Identifiable {
+struct Product: Identifiable, Hashable {
     var id = UUID().uuidString
     var name : String
     var price : Float
-    
 }

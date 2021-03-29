@@ -12,13 +12,11 @@ struct MemberView: View {
     @State var create = ""
     @State var memberList : [Member] = []
     @State var productList : [Product] = []
-    var selections : [String] = []
-    var cartList : [Cart] = []
     
     var body: some View {
         
         VStack(spacing: 10){
-            ScrollView(.vertical, showsIndicators: false){
+            ScrollView(.vertical, showsIndicators: true){
                 LazyVStack(alignment: .center, spacing: 10){
                     ForEach(memberList.indices, id: \.self){ index in
                         HStack(spacing: 0){
@@ -52,35 +50,17 @@ struct MemberView: View {
                 Text("Add member")
                     .padding()
                     .frame(maxWidth: .infinity)
-                    .background(Color.blue)
+                    .background(Color.blue.cornerRadius(10))
                     .foregroundColor(Color.white)
-                    .cornerRadius(10)
             })
             .disabled(create == "")
             .opacity(create == "" ? 0.5 : 1)
             
-            NavigationLink(destination: OrderView(memberList: $memberList, selections: selections, cartList: cartList), label: {
+            NavigationLink(destination: OrderView(memberList: memberList), label: {
                 Text("Let's share")
+                    .frame(maxWidth: .infinity)
             })
             .padding()
-            .frame(maxWidth: .infinity)
-            .background(Color.black.opacity(0.8))
-            .foregroundColor(Color.white)
-            .cornerRadius(10)
-        
-//            Button(action: {
-//                print(memberList)
-//            }, label: {
-//                Text("Done, Next")
-//                    .padding()
-//                    .frame(maxWidth: .infinity)
-//                    .background(Color.blue)
-//                    .foregroundColor(Color.white)
-//                    .cornerRadius(10)
-//
-//            })
-            
-            
         }
         .padding()
         

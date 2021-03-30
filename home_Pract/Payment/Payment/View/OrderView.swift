@@ -9,35 +9,26 @@ import SwiftUI
 
 struct OrderView: View {
     
-    @State var memberList: [Member]
-    
+    @ObservedObject var memberList = MemberViewModel()
+    @ObservedObject var productList = ProductViewModel()
     var selections : [String] = []
     
-    @State var cartList : [Cart] = []
+//    @State var cartList : [Cart] = []
     
-    @State var productList = [
-        Product(name: "Beef", price: 10),
-        Product(name: "Turkey", price: 9),
-        Product(name: "Chicken", price: 8),
-        Product(name: "Lamb", price: 7),
-        Product(name: "Pork", price: 6),
-        Product(name: "Eggs", price: 5),
-        Product(name: "Milk", price: 4),
-        Product(name: "Eggs", price: 3),
-        Product(name: "Snack", price: 2),
-        Product(name: "Bread", price: 1)
-    ]
+    
     
     var body: some View {
         VStack {
             ScrollView(.vertical, showsIndicators: false){
-                ForEach(0..<productList.count){ i in
+                
+                ForEach(productList.productData){ product in
                     
                     VStack(spacing:0){
+                        
                         HStack{
-                            Text(productList[i].name)
+                            Text(product.name)
                             Spacer()
-                            Text(formatPrice(value: productList[i].price))
+                            Text(formatPrice(value: product.price))
                                 .frame(maxWidth: 80)
                                 .padding(.all, 3)
                                 .background(Color.white.cornerRadius(5))
@@ -48,9 +39,9 @@ struct OrderView: View {
                         Divider().padding(.vertical, 3)
                         
                         DisplayView(
-                            memberList: $memberList,
-                            productList: $productList[i],
-                            cartList: $cartList,
+                            memberList: memberList,
+                            productList: productList,
+//                            cartList: $cartList,
                             selections: selections
                         )
                     }
@@ -64,7 +55,7 @@ struct OrderView: View {
                 .font(.title)
             
             Button(action: {
-                print("--> Total: \($cartList)")
+//                print("--> Total: \($cartList)")
             }, label: {
                 Text("Calculate")
                     .padding()
@@ -87,9 +78,10 @@ struct OrderView: View {
 
 struct DisplayView: View {
     
-    @Binding var memberList: [Member]
-    @Binding var productList : Product
-    @Binding var cartList : [Cart]
+//    @Binding var memberList: [Member]
+    @ObservedObject var memberList = MemberViewModel()
+    @ObservedObject var productList = ProductViewModel()
+//    @Binding var cartList : [Cart]
     @State var selections : [String]
     
     
@@ -105,26 +97,26 @@ struct DisplayView: View {
             Spacer()
             
             Menu(){
-                ForEach(memberList, id: \.self) { mem in
-                    MultipleSelectionRow(title: mem.name, isSelected: selections.contains(mem.name)) {
-                        if selections.contains(mem.name) {
-                            selections.removeAll(where: { $0 == mem.name })
+                ForEach(memberList.memberData) { member in
+                    MultipleSelectionRow(title: member.name, isSelected: selections.contains(member.name)) {
+                        if selections.contains(member.name) {
+                            selections.removeAll(where: { $0 == member.name })
                            
     //                        cartList.remove(at: getIndexMember(mem: mem))
                             
     //                        memberList[getIndexMember(mem: mem)].total -= productList[i].price
-                            print("\(cartList)")
+//                            print("\(cartList)")
                         }
                         else {
-                            selections.append(mem.name)
+                            selections.append(member.name)
 
     //                        memberList[getIndexMember(mem: mem)].total += productList[i].price
-                            cartList.append(
-                                Cart(memberName: mem,
-                                     memberProduct: productList,
-                                     currentTotal: getTotal(price: productList.price, amountShared: selections.count)
-                                ))
-                            print("\(cartList)")
+//                            cartList.append(
+//                                Cart(memberName: memberList,
+//                                     memberProduct: productList,
+//                                     currentTotal: getTotal(price: productList.price, amountShared: selections.count)
+//                                ))
+//                            print("\(cartList)")
                         }
                     }
                 }

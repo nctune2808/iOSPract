@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct Cart: Hashable {
-    var memberName : Member
-    var memberProduct : Product
-    var currentTotal : Float = 0.00
-    
-}
+//struct Cart: Hashable {
+//    var memberName : Member
+//    var memberProduct : Product
+//    var currentTotal : Float = 0.00
+//    
+//}
 

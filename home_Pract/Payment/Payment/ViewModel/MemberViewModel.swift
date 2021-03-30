@@ -8,11 +8,10 @@
 import SwiftUI
 
 class MemberViewModel: ObservableObject{
-//    @Published var mems = [
-//        Member(name: "A"),
-//        Member(name: "B"),
-//        Member(name: "C"),
-//        Member(name: "D")
-//    ]
+    @Published var memberData = [Member]()
+    
+    init() {
+        self.memberData = []
+    }
 }
 

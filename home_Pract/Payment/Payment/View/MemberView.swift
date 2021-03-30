@@ -10,7 +10,7 @@ import SwiftUI
 struct MemberView: View {
     
     @State var create = ""
-    @State var memberList : [Member] = []
+    @ObservedObject var memberList = MemberViewModel()
     @State var productList : [Product] = []
     
     var body: some View {
@@ -18,13 +18,13 @@ struct MemberView: View {
         VStack(spacing: 10){
             ScrollView(.vertical, showsIndicators: true){
                 LazyVStack(alignment: .center, spacing: 10){
-                    ForEach(memberList.indices, id: \.self){ index in
+                    ForEach(memberList.memberData){ member in
                         HStack(spacing: 0){
-                            Text(memberList[index].name)
+                            Text(member.name)
                                 .padding(.horizontal, 5)
                             Button(action: {
-                                if !memberList.isEmpty{
-                                    memberList.remove(at: index)
+                                if !memberList.memberData.isEmpty{
+                                    memberList.memberData.remove(at: indexMember(mem: member))
                                 }
 //                                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                             }, label: {
@@ -68,13 +68,20 @@ struct MemberView: View {
     }
     
     func onCommit() {
-        if memberList.isEmpty{
-            memberList.append(contentsOf: [])
+        if memberList.memberData.isEmpty{
+            memberList.memberData.append(contentsOf: [])
         }
         withAnimation(.default){
-            memberList.append(Member(name: create))
+            memberList.memberData.append(Member(name: create, total: 0.0))
             create = ""
         }
     }
+    
+    func indexMember(mem : Member) -> Int {
+        return memberList.memberData.firstIndex{ (mem1) -> Bool in
+            return mem.id == mem1.id
+        } ?? 0
+    }
+
 }
 

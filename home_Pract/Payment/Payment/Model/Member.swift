@@ -7,9 +7,13 @@
 
 import SwiftUI
 
-struct Member: Identifiable, Hashable {
+class Member: ObservableObject, Identifiable {
     var id = UUID().uuidString
-    var name : String
-    var total : Float = 0.00
+    @Published var name : String
+    @Published var total : Float
     
+    init(name: String, total: Float) {
+        self.name = name
+        self.total = total
+    }
 }

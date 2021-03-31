@@ -28,7 +28,7 @@ struct OrderView: View {
             )
         }
         .padding(.horizontal,10)
-        .navigationTitle("Recipe")
+        .navigationTitle("Receipt")
     }
     
 }
@@ -77,73 +77,20 @@ struct TopReceipt: View {
     }
 }
 
-struct ReceiptTotal: View {
-    
-    @Binding var memberData : [Member]
-    
-    var body: some View {
-        ForEach(memberData) { members in
-            
-            Text("\(members.name) : \(members.total)")
-                .font(.title)
-                        
-        }
-    }
-    
-}
-
-struct CalculateReceipt: View {
-    
-    @Binding var memberData: [Member]
-    @Binding var productData: [Product]
-    
-    var body: some View{
-        
-        Button(action: {
-            
-            print("-------------------")
-                         
-            for members in memberData {
-                var cartTotal : Float = 0.0
-                print("--> \(members.name)")
-                for carts in members.cart{
-                    print("| \(carts.productCart.price) -> [ \(carts.productCart.repeated) ]")
-                    cartTotal += carts.productCart.price / Float(carts.productCart.repeated)
-                    
-                }
-                print("=> \(cartTotal)")
-                
-                members.total = cartTotal
-                
-                print("member total \(members.total)")
-                print("-------------------")
-                
-//                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-            }
-        }, label: {
-            Text("Calculate")
-                .padding()
-                .frame(maxWidth: .infinity)
-                .background(Color.blue.cornerRadius(10))
-                .foregroundColor(Color.white)
-        })
-    }
-       
-}
-
 struct BottomReceipt: View{
     
     @State var memberData: [Member]
     @State var productData: [Product]
     
     var body: some View{
-        
-        VStack {
-            
-            ReceiptTotal(memberData: $memberData)
-            CalculateReceipt(memberData: $memberData, productData: $productData)
-        }
-        
+              
+        NavigationLink(destination: SplitView(memberData: $memberData), label: {
+            Text("Calculate")
+                .frame(maxWidth: .infinity)
+        })
+        .padding()
+        .background(Color.blue.cornerRadius(15))
+        .foregroundColor(Color.white)
     }
 }
 
@@ -157,26 +104,20 @@ struct BottomBox: View {
     var body: some View{
         
         HStack{
-            
             AssignedBox(
                 selections: $selections,
                 isChosen: $isChosen
             )
-
             Spacer()
-            
             DropdownBox(
                 memberData: memberData,
                 productData: productData,
                 selections: $selections,
                 isChosen: $isChosen
             )
-            
         }
         .padding(.all, 5)
-        
     }
-    
 }
 
 
@@ -200,19 +141,15 @@ struct DropdownBox: View {
     @Binding var selections : [String]
     @Binding var isChosen : Bool
     
-    
     var body: some View{
         Menu(){
-            
             ForEach(memberData) { members in
                 
                 MultiSelect(title: members.name, isSelected: selections.contains(members.name)) {
                                
                     if selections.contains(members.name) {   // has mem in selected array
                         selections.removeAll(where: { $0 == members.name })
-                        members.cart.remove(at: indexMember(member: members) )
-                        
-                        
+                        members.cart.remove(at: indexMember(members: members) )
                         
                         if selections.isEmpty{              // empty selected array
                             isChosen = false
@@ -225,6 +162,7 @@ struct DropdownBox: View {
                         members.cart.append(
                             Cart(productCart: productData)
                         )
+                        onCalculate()
                     }
                 }
             }
@@ -240,14 +178,31 @@ struct DropdownBox: View {
         .foregroundColor(.white)
     }
     
-    func indexMember(member : Member) -> Int {
-        return memberData.firstIndex{ (mem1) -> Bool in
-            return member.id == mem1.id
+    func indexMember(members : Member) -> Int {
+        return memberData.firstIndex{ (mem) -> Bool in
+            return members.id == mem.id
         } ?? 0
     }
     
     func getTotal(price: Float, amountShared: Int) -> Float {
         return price / Float(amountShared)
+    }
+    
+    func onCalculate() {
+        print("-------------------")
+
+        for members in memberData {
+            var cartTotal : Float = 0.0
+            print("-> \(members.name)")
+            for carts in members.cart{
+                print("| \(carts.productCart.price) -> [ \(carts.productCart.repeated) ]")
+                cartTotal += carts.productCart.price / Float(carts.productCart.repeated)
+
+            }
+            members.total = cartTotal
+            print("=> \(members.total)")
+            print("-------------------")
+        }
     }
 }
 

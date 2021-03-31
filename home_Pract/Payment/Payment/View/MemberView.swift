@@ -27,7 +27,7 @@ struct MemberView: View {
                                 if !memberList.memberData.isEmpty{
                                     memberList.memberData.remove(at: indexMember(mem: member))
                                 }
-                                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+//                                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                             }, label: {
                                 Image(systemName: "xmark.circle.fill")
                                     .padding(.all, 5)
@@ -43,11 +43,11 @@ struct MemberView: View {
 
 
 
-            TextField("Create new member", text: $create, onCommit: onCommit)
+            TextField("Create new member", text: $create, onCommit: onAdd)
                 .padding()
                 .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray.opacity(0.5),lineWidth: 1.5))
 
-            Button(action: { onCommit() }, label: {
+            Button(action: { onAdd() }, label: {
                 Text("Add member")
                     .padding()
                     .frame(maxWidth: .infinity)
@@ -68,12 +68,12 @@ struct MemberView: View {
         
     }
     
-    func onCommit() {
+    func onAdd() {
         if memberList.memberData.isEmpty{
             memberList.memberData.append(contentsOf: [])
         }
         withAnimation(.default){
-            memberList.memberData.append(Member(name: create, cart: cartList))
+            memberList.memberData.append(Member(name: create, total: 0.0, cart: cartList))
             create = ""
         }
     }

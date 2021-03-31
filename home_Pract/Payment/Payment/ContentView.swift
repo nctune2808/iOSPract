@@ -16,7 +16,7 @@ struct ContentView: View {
     var body: some View {
         NavigationView{
             MemberView()
-                .navigationTitle("Create Member")
+                .navigationBarTitle("Create Member")
         }
         
 //        ScrollView(.vertical, showsIndicators: false){

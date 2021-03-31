@@ -12,6 +12,7 @@ struct MemberView: View {
     @State var create = ""
     @ObservedObject var memberList = MemberViewModel()
     @State var productList : [Product] = []
+    @State var cartList : [Cart] = []
     
     var body: some View {
         
@@ -26,7 +27,7 @@ struct MemberView: View {
                                 if !memberList.memberData.isEmpty{
                                     memberList.memberData.remove(at: indexMember(mem: member))
                                 }
-//                                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                             }, label: {
                                 Image(systemName: "xmark.circle.fill")
                                     .padding(.all, 5)
@@ -72,7 +73,7 @@ struct MemberView: View {
             memberList.memberData.append(contentsOf: [])
         }
         withAnimation(.default){
-            memberList.memberData.append(Member(name: create, total: 0.0))
+            memberList.memberData.append(Member(name: create, cart: cartList))
             create = ""
         }
     }

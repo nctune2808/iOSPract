@@ -7,10 +7,15 @@
 
 import SwiftUI
 
-//struct Cart: Hashable {
-//    var memberName : Member
-//    var memberProduct : Product
-//    var currentTotal : Float = 0.00
-//    
-//}
+class Cart: ObservableObject, Identifiable {
+    var id = UUID().uuidString
+//    @Published var memberCart : Member
+    @Published var productCart : Product
+    
+    
+    init(productCart: Product) {
+//        self.memberCart = memberCart
+        self.productCart = productCart
+    }
+}
 

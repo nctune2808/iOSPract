@@ -13,16 +13,16 @@ class ProductViewModel: ObservableObject{
     
     init() {
         self.productData = [
-            Product(name: "Beef", price: 10),
-            Product(name: "Turkey", price: 9),
-            Product(name: "Chicken", price: 8),
-            Product(name: "Lamb", price: 7),
-            Product(name: "Pork", price: 6),
-            Product(name: "Eggs", price: 5),
-            Product(name: "Milk", price: 4),
-            Product(name: "Eggs", price: 3),
-            Product(name: "Snack", price: 2),
-            Product(name: "Bread", price: 1)
+            Product(name: "Beef",   price:10, repeated: 0),
+            Product(name: "Turkey", price: 9, repeated: 0),
+            Product(name: "Chicken",price: 8, repeated: 0)
+//            Product(name: "Lamb",   price: 7, repeated: 0),
+//            Product(name: "Pork",   price: 6, repeated: 0),
+//            Product(name: "Eggs",   price: 5, repeated: 0),
+//            Product(name: "Milk",   price: 4, repeated: 0),
+//            Product(name: "Eggs",   price: 3, repeated: 0),
+//            Product(name: "Snack",  price: 2, repeated: 0),
+//            Product(name: "Bread",  price: 1, repeated: 0)
         ]
     }
 }

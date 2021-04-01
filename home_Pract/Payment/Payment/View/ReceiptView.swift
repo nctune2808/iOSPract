@@ -7,28 +7,31 @@
 
 import SwiftUI
 
-struct OrderView: View {
+struct ReceiptView: View {
     
-    @ObservedObject var memberList = MemberViewModel()
-    @ObservedObject var productList = ProductViewModel()
+    @State var memberList = MemberViewModel()
+    @State var productList = ProductViewModel()
+    @State var isAssigned : Bool = false
     
     var body: some View {
         VStack {
             
             TopReceipt(
                 memberData: memberList.memberData,
-                productData: productList.productData
+                productData: productList.productData,
+                isAssigned: $isAssigned
             )
             
             Spacer()
             
             BottomReceipt(
                 memberData: memberList.memberData,
-                productData: productList.productData
+                productData: productList.productData,
+                isAssigned: $isAssigned
             )
         }
         .padding(.horizontal,10)
-        .navigationTitle("Receipt")
+        .navigationBarTitle("Receipt", displayMode: .inline)
     }
     
 }
@@ -37,6 +40,7 @@ struct TopReceipt: View {
     
     @State var memberData: [Member]
     @State var productData: [Product]
+    @Binding var isAssigned : Bool
     
     var body: some View{
         ScrollView(.vertical, showsIndicators: false){
@@ -58,9 +62,10 @@ struct TopReceipt: View {
                     
                     Divider().padding(.vertical, 3)
                     
-                    BottomBox(
+                    DetailsBox(
                         memberData: memberData,
-                        productData: product
+                        productData: product,
+                        isAssigned: $isAssigned
                     )
                 }
                 .padding(.all, 5)
@@ -69,7 +74,7 @@ struct TopReceipt: View {
         }
     }
     
-    func formatPrice(value: Float) -> String {
+    func formatPrice(value: Double) -> String {
         let format = NumberFormatter()
         format.numberStyle = .currency
         format.currencyCode = "GBP"
@@ -81,7 +86,7 @@ struct BottomReceipt: View{
     
     @State var memberData: [Member]
     @State var productData: [Product]
-    
+    @Binding var isAssigned : Bool
     var body: some View{
               
         NavigationLink(destination: SplitView(memberData: $memberData), label: {
@@ -91,29 +96,29 @@ struct BottomReceipt: View{
         .padding()
         .background(Color.blue.cornerRadius(15))
         .foregroundColor(Color.white)
+        .disabled(!isAssigned).opacity(isAssigned ? 1 : 0.5)
     }
 }
 
-struct BottomBox: View {
+struct DetailsBox: View {
     
     @State var memberData : [Member]
     @State var productData : Product
     @State var selections : [String] = []
-    @State var isChosen : Bool = false
+    @Binding var isAssigned : Bool
     
     var body: some View{
         
         HStack{
             AssignedBox(
-                selections: $selections,
-                isChosen: $isChosen
+                selections: $selections
             )
             Spacer()
             DropdownBox(
                 memberData: memberData,
                 productData: productData,
                 selections: $selections,
-                isChosen: $isChosen
+                isAssigned: $isAssigned
             )
         }
         .padding(.all, 5)
@@ -124,12 +129,11 @@ struct BottomBox: View {
 struct AssignedBox: View {
     
     @Binding var selections : [String]
-    @Binding var isChosen: Bool
     
     var body: some View{
     
         ScrollView(.horizontal, showsIndicators: false) {
-            Text(isChosen ? selections.description : "")
+            Text(!selections.isEmpty ? selections.description : "")
                 .padding(.horizontal, 5)
         }
     }
@@ -139,31 +143,33 @@ struct DropdownBox: View {
     @State var memberData : [Member]
     @State var productData : Product
     @Binding var selections : [String]
-    @Binding var isChosen : Bool
+    @Binding var isAssigned : Bool
     
     var body: some View{
         Menu(){
             ForEach(memberData) { members in
-                
                 MultiSelect(title: members.name, isSelected: selections.contains(members.name)) {
-                               
+                    
                     if selections.contains(members.name) {   // has mem in selected array
                         selections.removeAll(where: { $0 == members.name })
-                        members.cart.remove(at: indexMember(members: members) )
                         
-                        if selections.isEmpty{              // empty selected array
-                            isChosen = false
-                        }
+                        members.cart.removeAll(where: { $0.productCart.name == productData.name } )
+                        
+//                        if selections.isEmpty{              // empty selected array
+//                            isChosen = false
+//                        }
                     }
                     else {                                  // selected array added mem
                         selections.append(members.name)
-                        isChosen = true
-                        productData.repeated = selections.count
+//                        isChosen = (true)
+                        
                         members.cart.append(
-                            Cart(productCart: productData)
+                            Cart(productCart: productData, isChosen: true)
                         )
-                        onCalculate()
+                        
                     }
+                    productData.repeated = selections.count
+                    onCalculate()
                 }
             }
         } label: {
@@ -184,20 +190,21 @@ struct DropdownBox: View {
         } ?? 0
     }
     
-    func getTotal(price: Float, amountShared: Int) -> Float {
-        return price / Float(amountShared)
-    }
-    
     func onCalculate() {
         print("-------------------")
-
+        isAssigned = false                  // init global isAssigned inactive in loop
         for members in memberData {
-            var cartTotal : Float = 0.0
-            print("-> \(members.name)")
+            var cartTotal : Double = 0.0
+            
+            print("{ \(members.name) }")
             for carts in members.cart{
-                print("| \(carts.productCart.price) -> [ \(carts.productCart.repeated) ]")
-                cartTotal += carts.productCart.price / Float(carts.productCart.repeated)
-
+                
+                print(" | \(carts.productCart.price) -> [ \(carts.productCart.repeated) ] -> { \(carts.isChosen) }")
+                
+                cartTotal += carts.productCart.price / Double(carts.productCart.repeated)
+                
+                isAssigned = carts.isChosen     // set global isAssigned available if exist cart
+                
             }
             members.total = cartTotal
             print("=> \(members.total)")
@@ -214,12 +221,8 @@ struct MultiSelect: View {
 
     var body: some View {
         Button(action: action) {
-            
-            
             HStack {
-                
                 Text(title)
-                
                 if isSelected {
                     Image(systemName: "checkmark.circle.fill")
                 } else {

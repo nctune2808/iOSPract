@@ -14,13 +14,23 @@ struct SplitView: View {
     var body: some View {
 
 
-        ForEach(memberData) { members in
-            
-            Text("\(members.name) : \(members.total)")
-                .font(.title)
-                        
+        VStack {
+            ForEach(memberData) { members in
+                
+                Text("\(members.name) : \(formatPrice(value: members.total))")
+                    .font(.title)
+            }
         }
+        .navigationBarTitle("Individual Total", displayMode: .inline)
         
+        
+    }
+    
+    func formatPrice(value: Double) -> String {
+        let format = NumberFormatter()
+        format.numberStyle = .currency
+        format.currencyCode = "GBP"
+        return format.string(from: (NSNumber(value: value))) ?? ""
     }
 
 }

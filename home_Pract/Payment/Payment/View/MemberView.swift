@@ -17,7 +17,7 @@ struct MemberView: View {
     var body: some View {
         
         VStack(spacing: 10){
-            ScrollView(.vertical, showsIndicators: true){
+            ScrollView(.vertical, showsIndicators: false){
                 LazyVStack(alignment: .center, spacing: 10){
                     ForEach(memberList.memberData){ member in
                         HStack(spacing: 0){
@@ -57,7 +57,7 @@ struct MemberView: View {
             .disabled(create == "")
             .opacity(create == "" ? 0.5 : 1)
             
-            NavigationLink(destination: OrderView(memberList: memberList), label: {
+            NavigationLink(destination: ReceiptView(memberList: memberList), label: {
                 Text("Let's share")
                     .frame(maxWidth: .infinity)
             })

@@ -11,44 +11,58 @@ struct AccountView: View {
     
     @Binding var offset: CGFloat
     
-    @State private var recognizedText = "Tap button to start scanning"
+    @State private var recognizedText : [String] = ["Tap button to start scanning"]
     @State private var showingScanningView = false
-       
-       var body: some View {
-               VStack {
-                   ScrollView(.vertical, showsIndicators: false) {
-                    
-                       ZStack {
-                           RoundedRectangle(cornerRadius: 20, style: .continuous)
-                               .fill(Color.gray.opacity(0.2))
-
-                        Text(recognizedText)
-                           .padding()
-                       }
-                       .padding()
-                   }
+    var body: some View {
+        VStack {
+            List {
+                ForEach(0..<recognizedText.count, id: \.self) {item in
+                    HStack{
+                        Text(recognizedText[item])
+                        Spacer()
+                        Button(action: {
+                            recognizedText.remove(at: item)
+                        }, label: {
+                            Image(systemName: "xmark.circle.fill")
+                        })
+                    }
+                    .padding()
+                    .background(item % 2 == 0 ? Color.gray.opacity(0.2) : Color.white)
+                }
+            }
                    
-                   Spacer()
+            Spacer()
+
+            HStack(spacing: 50) {
+               
+               Button(action: {
+                   self.showingScanningView = true
+               }) {
+                   Text("Start Scanning")
+               }
+               .padding()
+               .foregroundColor(.white)
+               .background(Capsule().fill(Color.blue))
                 
-                   HStack {
-                       
-                       Button(action: {
-                           self.showingScanningView = true
-                       }) {
-                           Text("Start Scanning")
-                       }
-                       .padding()
-                       .foregroundColor(.white)
-                       .background(Capsule().fill(Color.blue))
-                   }
-                   .padding()
-               }
-               .sheet(isPresented: $showingScanningView) {
-                    ScanDocumentViewModel(recognizedText: self.$recognizedText)
-               }
-           }
-       
-    
+                Button(action: {
+                    print(recognizedText)
+                }) {
+                    Text("Calculate")
+                }
+                .padding()
+                .foregroundColor(.white)
+                .background(Capsule().fill(Color.red))
+                
+            }
+            .padding()
+            }
+            .sheet(isPresented: $showingScanningView) {
+            ScanDocumentViewModel(recognizedText: self.$recognizedText)
+        }
+    }
+}
+
+
 //    var body: some View {
 //        VStack{
 //            HStack{
@@ -109,5 +123,3 @@ struct AccountView: View {
 //        }
 //        .padding(.top, edges?.top ?? 15)
 //    }
-}
-

@@ -83,8 +83,8 @@ struct ScanDocumentViewModel: UIViewControllerRepresentable {
 //                entireRecognizedText.filter {okayChars.contains($0)}
                 
                 
-                entireRecognizedText.removeAll(where:  {$0.isSymbol})
-                array = entireRecognizedText.components(separatedBy: "\n").filter { $0 != "*" }
+                entireRecognizedText.removeAll(where:  {$0.isSymbol || $0.isPunctuation})
+                array = entireRecognizedText.components(separatedBy: "\n").filter { $0 != " " }
 
                 print(array)
                                 

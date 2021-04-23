@@ -9,7 +9,6 @@ import SwiftUI
 
 struct AccountView: View {
     
-    @Binding var offset : CGFloat
     var body: some View {
         VStack{
             HStack{

@@ -8,16 +8,14 @@
 import SwiftUI
 
 struct ScanningView: View {
-    
-    @Binding var offset: CGFloat
-    
+        
     @State private var recognizedText : [String] = ["Tap button to start scanning"]
     @State private var showingScanningView = false
+    
+    @State var memberList = MemberViewModel()
     @State var productData : [Product] = []
-    @State var isSave : Bool = false
     
     var body: some View {
-        NavigationView{
             VStack {
                 List {
                     ForEach(0..<recognizedText.count, id: \.self) {item in
@@ -30,17 +28,11 @@ struct ScanningView: View {
                                 for i in 0..<(recognizedText.count / 2) {
                                     productData.append(
                                         Product(name: recognizedText[2*i],
-                                                price: recognizedText[2*i+1],
+                                                price: toNumber(string: recognizedText[2*i+1]),
                                                 repeated: 0
                                         )
                                     )
                                 }
-                                
-//                                if recognizedText.count % 2 != 0 {
-//                                    isSave = false
-//                                } else {
-//                                    isSave = true
-//                                }
                             }, label: {
                                 Image(systemName: "xmark.circle.fill")
                             })
@@ -50,39 +42,49 @@ struct ScanningView: View {
                         .foregroundColor(item % 2 == 0 ? .white : .black)
                     }
                 }
-                       
-                Spacer()
+                .sheet(isPresented: $showingScanningView) {
+                    ScanDocumentViewModel(recognizedText: self.$recognizedText)
+                }
+                
 
-                HStack(spacing: 20) {
+                HStack(spacing: 30) {
                    
                    Button(action: {
-                       self.showingScanningView = true
+                        self.showingScanningView = true
                    }) {
-                       Text("Scan")
+                       Text("Let's Scan")
                    }
                    .padding()
                    .foregroundColor(.white)
                    .background(Capsule().fill(Color.blue))
-                    
                    
-                    NavigationLink(destination: ReceiptView(productData: $productData), label: {
-                        Text("Next")
+                   
+                    NavigationLink(destination: ReceiptView(memberData: memberList.memberData, productData: productData), label: {
+                        Text("Assign")
                     })
                     .padding()
                     .foregroundColor(.white)
                     .background(Capsule().fill(Color.green))
-                    .disabled(recognizedText.count % 2 != 0).opacity(recognizedText.count % 2 == 0 ? 1 : 0.3)
-                    
+                    .disabled(!isEnough()).opacity(isEnough() ? 1 : 0.3)
+
                 }
-                .padding()
+                .padding(.vertical, 5)
+                .padding(.bottom, 40)
+              
+                .navigationBarTitle("Scan")
             }
-            .navigationBarTitle("Supermarket")
-            .sheet(isPresented: $showingScanningView) {
-                ScanDocumentViewModel(recognizedText: self.$recognizedText)
-            }
-            
-        }
-        
     }
+    
+    func isEnough() -> Bool {
+        if recognizedText.count % 2 == 0 && !productData.isEmpty {
+            return true
+        }
+        return false
+    }
+    
+    func toNumber(string: String) -> Double {
+        return (string as NSString).doubleValue / 100
+    }
+
 }
 

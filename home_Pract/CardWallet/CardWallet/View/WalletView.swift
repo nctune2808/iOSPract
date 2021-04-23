@@ -11,25 +11,12 @@ struct WalletView : View {
     
     
     @Binding var hide : Bool
-    @Binding var offset: CGFloat
     
     @State var data = CardViewModel()
     @State var search : String = ""
     
     var body: some View {
- 
-//        ZStack(alignment: Alignment(horizontal: .center, vertical: .top)) {
-//
-//            BodyWalletView (data: $data, hide: $hide, search: $search)
-//
-//            if !hide {
-//                TopWalletView(data: $data, search: $search)
-//                    .padding(.horizontal,5)
-//                    .shadow(radius: 50)
-//            }   // header
-//        }
-////        .padding(.top, edges?.top ?? -15)
-        
+         
         VStack{
             BodyWalletView (data: $data.brands, hide: $hide, search: $search)
         }
@@ -37,7 +24,6 @@ struct WalletView : View {
             VStack{
                 if !hide {
                     TopWalletView(data: $data.brands, search: $search)
-                        .padding(.top, edges?.top ?? 15)
                         .padding(.horizontal,8)
                 }
             }
@@ -121,7 +107,6 @@ struct BodyWalletView : View{
                     }))
                 }
             }
-            .padding(.top, UIScreen.main.bounds.height / 8 )
         }
         
     }
@@ -174,7 +159,6 @@ struct DetailCardView : View {    // clickable
                         .background(Color.black.opacity(0.8))
                         .clipShape(Circle())
                 }
-                .padding(.top, UIApplication.shared.windows.first?.safeAreaInsets.top)
                 .padding()
             }
         }

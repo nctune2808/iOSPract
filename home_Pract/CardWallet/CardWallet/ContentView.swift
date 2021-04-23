@@ -14,11 +14,11 @@ var edges = UIApplication.shared.windows.first?.safeAreaInsets
 
 
 struct ContentView: View {
-    @State private var search : String = ""
+    
     @State var hide = false
-    @State var data : Cards
+
     @State var selectedTab = "creditcard.circle.fill"
-    @State var offset: CGFloat = rect.width
+    @State var offset: CGFloat = 0
 
     
     
@@ -28,9 +28,9 @@ struct ContentView: View {
             let frame = reader.frame(in: .global)
             TabViewModel (tabs: ["","",""], rect: frame, offset: $offset) {
                 
-                CameraView(offset: $offset)
+                ScanningView(offset: $offset)
                 
-                WalletView(data: $data, hide: $hide, search: $search, offset: $offset)
+                WalletView(hide: $hide, offset: $offset)
                                 
                 AccountView(offset: $offset)
                     
@@ -55,9 +55,8 @@ struct ContentView: View {
 }
 
 let tabsMap : [String : CGFloat] = [
-    "camera.circle.fill"     : 0,
-    "creditcard.circle.fill" : rect.width,
-    "person.crop.circle.fill": rect.width * 2
+    "creditcard.circle.fill" : 0,
+    "person.crop.circle.fill": rect.width
 ]
 
 struct NavigationBar: View {
@@ -96,12 +95,3 @@ struct NavigationBar: View {
     
 }
 
-struct ContentView_Previews: PreviewProvider {
-    
-    static var previews: some View {
-        let cards = Cards()
-        ContentView(data: cards)
-            .preferredColorScheme(.dark)
-
-    }
-}

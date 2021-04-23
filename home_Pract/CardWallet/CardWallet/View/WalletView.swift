@@ -9,10 +9,12 @@ import SwiftUI
 
 struct WalletView : View {
     
-    @Binding var data : Cards
+    
     @Binding var hide : Bool
-    @Binding var search : String
     @Binding var offset: CGFloat
+    
+    @State var data = CardViewModel()
+    @State var search : String = ""
     
     var body: some View {
  
@@ -29,12 +31,12 @@ struct WalletView : View {
 ////        .padding(.top, edges?.top ?? -15)
         
         VStack{
-            BodyWalletView (data: $data, hide: $hide, search: $search)
+            BodyWalletView (data: $data.brands, hide: $hide, search: $search)
         }
         .overlay(
             VStack{
                 if !hide {
-                    TopWalletView(data: $data, search: $search)
+                    TopWalletView(data: $data.brands, search: $search)
                         .padding(.top, edges?.top ?? 15)
                         .padding(.horizontal,8)
                 }
@@ -48,7 +50,7 @@ struct WalletView : View {
 
 struct TopWalletView : View {
     @Environment(\.colorScheme) var scheme
-    @Binding var data : Cards
+    @Binding var data : [Card]
     @Binding var search : String
     
     var body: some View {
@@ -79,7 +81,7 @@ struct TopWalletView : View {
 struct BodyWalletView : View{
     
     @State var scrolled = 1
-    @Binding var data : Cards
+    @Binding var data : [Card]
     @Binding var hide : Bool
     @Binding var search : String
     
@@ -88,24 +90,24 @@ struct BodyWalletView : View{
         ScrollView(.vertical, showsIndicators: false){
             
             VStack(spacing: 0) {
-
-                ForEach(data.brands.filter ({
+                
+                ForEach(data.filter({
                     search.isEmpty ? true : $0.name.localizedCaseInsensitiveContains(search)
-                }), id: \.self) { card in
-                    
+                })) { card in
+                
                     GeometryReader{ geo in
                             
-                        DetailCardView(data: $data.brands[card.id-1], hide: $hide, dimens: geo)
+                        DetailCardView(data: card, hide: $hide, dimens: geo)
                             
                             .offset(y: card.expand ? -geo.frame(in: .global).minY : 0)
                             .opacity(hide ? (card.expand ? 1 : 0) : 1)
                             .onTapGesture {
                                 
                                 withAnimation(.interactiveSpring(response: 0.5, dampingFraction: 0.8, blendDuration: 0)){
-                                    print(data.brands[card.id-1])
+                                    print(card.name)
                                     if !card.expand {
                                         hide.toggle()
-                                        data.brands[card.id-1].expand.toggle()
+                                        card.expand.toggle()
                                     }
                                 }
                             }
@@ -128,7 +130,7 @@ struct BodyWalletView : View{
 
 struct DetailCardView : View {    // clickable
     
-    @Binding var data : Card
+    @State var data : Card
     @Binding var hide   : Bool
     @State   var dimens : GeometryProxy
     

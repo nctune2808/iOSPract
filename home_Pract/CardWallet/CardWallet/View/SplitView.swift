@@ -21,7 +21,7 @@ struct SplitView: View {
                     .font(.title)
             }
         }
-        .navigationBarTitle("Individual Total", displayMode: .inline)
+        .navigationBarTitle("Total", displayMode: .inline)
         
         
     }

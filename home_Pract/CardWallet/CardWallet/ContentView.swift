@@ -16,14 +16,11 @@ var edges = UIApplication.shared.windows.first?.safeAreaInsets
 struct ContentView: View {
     
     @State var hide = false
-
-    @State var selectedTab = "creditcard.circle.fill"
-
     
     var body: some View {
         
         NavigationView {    // thêm navigation View
-            TabView() {
+            TabView {
                 MemberView()
                     .tabItem{ Image(systemName: "viewfinder.circle.fill")}
                     .tag(0)

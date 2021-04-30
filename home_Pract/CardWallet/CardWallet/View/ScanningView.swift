@@ -18,24 +18,13 @@ struct ScanningView: View {
     var body: some View {
             VStack {
                 List {
-                    ForEach(0..<recognizedText.count, id: \.self) {item in
+                    ForEach(recognizedText.indices, id: \.self) {item in
                         HStack{
                             Text(recognizedText[item])
                             Spacer()
-                            Button(action: {
-                                recognizedText.remove(at: item)
-                                productData = []
-                                for i in 0..<(recognizedText.count / 2) {
-                                    productData.append(
-                                        Product(name: recognizedText[2*i],
-                                                price: toNumber(string: recognizedText[2*i+1]),
-                                                repeated: 0
-                                        )
-                                    )
-                                }
-                            }, label: {
+                            Button(action: {insertProducts(item: item)}) {
                                 Image(systemName: "xmark.circle.fill")
-                            })
+                            }
                         }
                         .padding()
                         .background(item % 2 == 0 ? Color.black.opacity(0.8) : Color.white)
@@ -57,33 +46,59 @@ struct ScanningView: View {
                    .padding()
                    .foregroundColor(.white)
                    .background(Capsule().fill(Color.blue))
-                   
-                   
+                                           
                     NavigationLink(destination: ReceiptView(memberData: memberList.memberData, productData: productData), label: {
+                        
                         Text("Assign")
+                        
+                        
                     })
                     .padding()
                     .foregroundColor(.white)
                     .background(Capsule().fill(Color.green))
                     .disabled(!isEnough()).opacity(isEnough() ? 1 : 0.3)
-
+                    
+                    
                 }
                 .padding(.vertical, 5)
                 .padding(.bottom, 40)
               
-                .navigationBarTitle("Scan")
+                .navigationBarTitle("Scan", displayMode: .inline)
             }
     }
     
+    func insertProducts(item: Int) {
+        
+        recognizedText.remove(at: item)
+        productData = []
+        for i in 0..<(recognizedText.count / 2) {
+            if isNumber(string: recognizedText[2*i+1]) {
+//                print(recognizedText[2*i], ":" , recognizedText[2*i+1], "->" ,isNumber(string: recognizedText[2*i+1]))
+                productData.append(
+                    Product( name: recognizedText[2*i],
+                            price: toNumber(string: recognizedText[2*i+1]),
+                            repeated: 0
+                    )
+                )
+            }
+        }
+    }
+    
     func isEnough() -> Bool {
-        if recognizedText.count % 2 == 0 && !productData.isEmpty {
-            return true
+        if recognizedText.count % 2 == 0 && !productData.isEmpty{
+            if (recognizedText.count / 2 == productData.count)  {
+                return true
+            }
         }
         return false
     }
     
+    func isNumber(string: String) -> Bool {
+        return Int(string.replacingOccurrences(of: " ", with: "")) != nil
+    }
+    
     func toNumber(string: String) -> Double {
-        return (string as NSString).doubleValue / 100
+        return (string.replacingOccurrences(of: " ", with: "") as NSString).doubleValue / 100
     }
 
 }

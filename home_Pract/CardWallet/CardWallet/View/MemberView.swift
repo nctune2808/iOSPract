@@ -67,7 +67,6 @@ struct MemberView: View {
         }
         .padding()
         
-        
     }
     
     func onAdd() {

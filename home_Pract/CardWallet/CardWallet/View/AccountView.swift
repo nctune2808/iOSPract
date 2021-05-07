@@ -67,7 +67,6 @@ struct AccountView: View {
                 }
             }
         }
-        .padding(.top, edges?.top ?? 15)
     }
     
 }

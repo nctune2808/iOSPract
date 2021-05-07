@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11142DCA2644B6390039EF5B /* CustomSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11142DC92644B6390039EF5B /* CustomSearch.swift */; };
 		112D70D225E90FBD0021BF57 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112D70D125E90FBD0021BF57 /* AppDelegate.swift */; };
 		112D70D425E90FBD0021BF57 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112D70D325E90FBD0021BF57 /* SceneDelegate.swift */; };
 		112D70D625E90FBD0021BF57 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112D70D525E90FBD0021BF57 /* ContentView.swift */; };
@@ -30,6 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		11142DC92644B6390039EF5B /* CustomSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSearch.swift; sourceTree = "<group>"; };
 		112D70CE25E90FBD0021BF57 /* CardWallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CardWallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		112D70D125E90FBD0021BF57 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		112D70D325E90FBD0021BF57 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 				1174B7152607A3320069B1F7 /* ScanDocumentViewModel.swift */,
 				114DA85E2632CF77005FC08A /* MemberViewModel.swift */,
 				114DA8672632D173005FC08A /* CardViewModel.swift */,
+				11142DC92644B6390039EF5B /* CustomSearch.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -215,6 +218,7 @@
 				112D70D225E90FBD0021BF57 /* AppDelegate.swift in Sources */,
 				11F43527262A477D005791FF /* Product.swift in Sources */,
 				114DA85F2632CF77005FC08A /* MemberViewModel.swift in Sources */,
+				11142DCA2644B6390039EF5B /* CustomSearch.swift in Sources */,
 				112D70D425E90FBD0021BF57 /* SceneDelegate.swift in Sources */,
 				114DA8682632D173005FC08A /* CardViewModel.swift in Sources */,
 				114DA8622632CF85005FC08A /* Member.swift in Sources */,

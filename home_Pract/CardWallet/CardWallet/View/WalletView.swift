@@ -14,55 +14,27 @@ struct WalletView : View {
     
     @State var data = CardViewModel()
     @State var search : String = ""
-    
+    @State var filteredItem = CardViewModel().brands
     var body: some View {
          
         VStack{
-            BodyWalletView (data: $data.brands, hide: $hide, search: $search)
-        }
-        .overlay(
-            VStack{
-                if !hide {
-                    TopWalletView(data: $data.brands, search: $search)
-                        .padding(.horizontal,8)
-                }
-            }
-            , alignment: .top
-                
-        )
-        
-    }
-}
-
-struct TopWalletView : View {
-    @Environment(\.colorScheme) var scheme
-    @Binding var data : [Card]
-    @Binding var search : String
-    
-    var body: some View {
-        
-        HStack (spacing: 0) {
-        
-            SearchBar(text: $search)
-                .border(scheme == .dark ? Color.black : Color.white)
-            Button(action: {
-
-            }, label: {
-                Image(systemName: "barcode.viewfinder")
-                    .resizable()
-                    .frame(width: 30, height: 25)
-                    .padding(.trailing, 10)
+            
+            CustomSearch(view: AnyView(BodyWalletView (data: $filteredItem, hide: $hide, search: $search)),
+                         placeHolder: "Searching Cards...", isLargeTitle: true, title: "Wallet",
+                         onSearch: {(txt) in
+                            
+                    if txt != ""{
+                        self.filteredItem =  data.brands.filter{$0.name.lowercased().contains(txt.lowercased())}
+                    }
+            }, onCancel: {
+                self.filteredItem =  data.brands
             })
+            .ignoresSafeArea()
+//            BodyWalletView (data: $data.brands, hide: $hide, search: $search)
         }
-        .frame(height: 50)
-        .background(scheme == .dark ? Color.black : Color.white)
-        .cornerRadius(20)
-        .shadow(radius: 50)
-        
     }
-    
-    
 }
+
 
 struct BodyWalletView : View{
     
@@ -77,10 +49,12 @@ struct BodyWalletView : View{
             
             VStack(spacing: 0) {
                 
-                ForEach(data.filter({
-                    search.isEmpty ? true : $0.name.localizedCaseInsensitiveContains(search)
-                })) { card in
+//                ForEach(data.filter({
+//                    search.isEmpty ? true : $0.name.localizedCaseInsensitiveContains(search)
+//                })) { card in
                 
+                ForEach(data) { card in
+                    
                     GeometryReader{ geo in
                             
                         DetailCardView(data: card, hide: $hide, dimens: geo)

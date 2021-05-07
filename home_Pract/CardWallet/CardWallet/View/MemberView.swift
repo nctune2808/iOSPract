@@ -12,12 +12,11 @@ struct MemberView: View {
     
     @State var create = ""
     @ObservedObject var memberList = MemberViewModel()
-    
     @State var cartList : [Cart] = []
     
     var body: some View {
         
-        VStack(spacing: 10){
+        VStack(spacing: 20){
             ScrollView(.vertical, showsIndicators: false){
                 LazyVStack(alignment: .center, spacing: 10){
                     ForEach(memberList.memberData){ member in
@@ -34,20 +33,22 @@ struct MemberView: View {
                                     .padding(.all, 5)
                             })
                         }
-                        .background(Capsule().stroke(Color.black, lineWidth: 1))
+                        .background(Capsule().stroke(Color.gray.opacity(0.5), lineWidth: 1))
                     }
                 }
                 .padding()
+                
             }
             .frame(width: UIScreen.main.bounds.width - 30 ,height: UIScreen.main.bounds.height / 2)
             .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray.opacity(0.5),lineWidth: 1.5))
-
+            .background(Color.white.clipShape(RoundedRectangle(cornerRadius: 10)))
 
 
             TextField("Create new member", text: $create, onCommit: onAdd)
                 .padding()
                 .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray.opacity(0.5),lineWidth: 1.5))
-
+                .background(Color.white.clipShape(RoundedRectangle(cornerRadius: 10)))
+            
             Button(action: { onAdd() }, label: {
                 Text("Add member")
                     .padding()
@@ -64,9 +65,9 @@ struct MemberView: View {
                     .frame(maxWidth: .infinity)
             })
             .padding()
+//            .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray.opacity(0.5),lineWidth: 1.5))
         }
         .padding()
-        
     }
     
     func onAdd() {

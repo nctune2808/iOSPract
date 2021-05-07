@@ -29,11 +29,15 @@ struct ScanningView: View {
                         .padding()
                         .background(item % 2 == 0 ? Color.black.opacity(0.8) : Color.white)
                         .foregroundColor(item % 2 == 0 ? .white : .black)
+                        
                     }
                 }
                 .sheet(isPresented: $showingScanningView) {
                     ScanDocumentViewModel(recognizedText: self.$recognizedText)
+                        
+                    
                 }
+                
                 
 
                 HStack(spacing: 30) {
@@ -48,10 +52,7 @@ struct ScanningView: View {
                    .background(Capsule().fill(Color.blue))
                                            
                     NavigationLink(destination: ReceiptView(memberData: memberList.memberData, productData: productData), label: {
-                        
                         Text("Assign")
-                        
-                        
                     })
                     .padding()
                     .foregroundColor(.white)
@@ -62,9 +63,9 @@ struct ScanningView: View {
                 }
                 .padding(.vertical, 5)
                 .padding(.bottom, 40)
-              
                 .navigationBarTitle("Scan", displayMode: .inline)
             }
+            
     }
     
     func insertProducts(item: Int) {

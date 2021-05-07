@@ -82,6 +82,7 @@ struct BodyWalletView : View{
                 }
             }
         }
+        .background(Color.init("themeLightBlue").ignoresSafeArea())
         
     }
     

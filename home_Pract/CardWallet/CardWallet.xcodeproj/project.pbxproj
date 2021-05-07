@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11057F5A2645F3CF00E1188D /* MessagingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11057F592645F3CF00E1188D /* MessagingView.swift */; };
+		11057F5C2645F44D00E1188D /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11057F5B2645F44D00E1188D /* SettingsView.swift */; };
 		11142DCA2644B6390039EF5B /* CustomSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11142DC92644B6390039EF5B /* CustomSearch.swift */; };
 		112D70D225E90FBD0021BF57 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112D70D125E90FBD0021BF57 /* AppDelegate.swift */; };
 		112D70D425E90FBD0021BF57 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112D70D325E90FBD0021BF57 /* SceneDelegate.swift */; };
@@ -15,7 +17,7 @@
 		112D70DB25E90FBE0021BF57 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 112D70DA25E90FBE0021BF57 /* Preview Assets.xcassets */; };
 		112D70DE25E90FBE0021BF57 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 112D70DC25E90FBE0021BF57 /* LaunchScreen.storyboard */; };
 		112D70EF25E944C20021BF57 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112D70EE25E944C20021BF57 /* Card.swift */; };
-		1148D66B25FC235D00F0E6DD /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1148D66A25FC235D00F0E6DD /* AccountView.swift */; };
+		1148D66B25FC235D00F0E6DD /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1148D66A25FC235D00F0E6DD /* ProfileView.swift */; };
 		1149E08B25F2766900F46F14 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1149E08A25F2766900F46F14 /* SearchViewModel.swift */; };
 		114DA85C2632CC63005FC08A /* ScanningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114DA85B2632CC63005FC08A /* ScanningView.swift */; };
 		114DA85F2632CF77005FC08A /* MemberViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114DA85E2632CF77005FC08A /* MemberViewModel.swift */; };
@@ -31,6 +33,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		11057F592645F3CF00E1188D /* MessagingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagingView.swift; sourceTree = "<group>"; };
+		11057F5B2645F44D00E1188D /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		11142DC92644B6390039EF5B /* CustomSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSearch.swift; sourceTree = "<group>"; };
 		112D70CE25E90FBD0021BF57 /* CardWallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CardWallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		112D70D125E90FBD0021BF57 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -41,7 +45,7 @@
 		112D70DD25E90FBE0021BF57 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		112D70DF25E90FBE0021BF57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		112D70EE25E944C20021BF57 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
-		1148D66A25FC235D00F0E6DD /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
+		1148D66A25FC235D00F0E6DD /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		1149E08A25F2766900F46F14 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		114DA85B2632CC63005FC08A /* ScanningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanningView.swift; sourceTree = "<group>"; };
 		114DA85E2632CF77005FC08A /* MemberViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberViewModel.swift; sourceTree = "<group>"; };
@@ -135,11 +139,13 @@
 			isa = PBXGroup;
 			children = (
 				115EE47625F82D3300471844 /* WalletView.swift */,
-				1148D66A25FC235D00F0E6DD /* AccountView.swift */,
+				1148D66A25FC235D00F0E6DD /* ProfileView.swift */,
 				114DA85B2632CC63005FC08A /* ScanningView.swift */,
 				114DA87226331418005FC08A /* MemberView.swift */,
 				114DA876263314B4005FC08A /* ReceiptView.swift */,
 				114DA87A26333A71005FC08A /* SplitView.swift */,
+				11057F592645F3CF00E1188D /* MessagingView.swift */,
+				11057F5B2645F44D00E1188D /* SettingsView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -219,13 +225,15 @@
 				11F43527262A477D005791FF /* Product.swift in Sources */,
 				114DA85F2632CF77005FC08A /* MemberViewModel.swift in Sources */,
 				11142DCA2644B6390039EF5B /* CustomSearch.swift in Sources */,
+				11057F5C2645F44D00E1188D /* SettingsView.swift in Sources */,
 				112D70D425E90FBD0021BF57 /* SceneDelegate.swift in Sources */,
 				114DA8682632D173005FC08A /* CardViewModel.swift in Sources */,
 				114DA8622632CF85005FC08A /* Member.swift in Sources */,
 				114DA85C2632CC63005FC08A /* ScanningView.swift in Sources */,
 				1174B7162607A3320069B1F7 /* ScanDocumentViewModel.swift in Sources */,
+				11057F5A2645F3CF00E1188D /* MessagingView.swift in Sources */,
 				114DA877263314B4005FC08A /* ReceiptView.swift in Sources */,
-				1148D66B25FC235D00F0E6DD /* AccountView.swift in Sources */,
+				1148D66B25FC235D00F0E6DD /* ProfileView.swift in Sources */,
 				1149E08B25F2766900F46F14 /* SearchViewModel.swift in Sources */,
 				112D70D625E90FBD0021BF57 /* ContentView.swift in Sources */,
 				114DA87B26333A71005FC08A /* SplitView.swift in Sources */,

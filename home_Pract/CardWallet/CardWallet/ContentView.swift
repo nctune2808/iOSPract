@@ -16,7 +16,8 @@ import SwiftUI
 struct ContentView: View {
     
     @State var hide = false
-    @State var selection = "Member"
+    @State var selection = "Profile"
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         
@@ -25,22 +26,27 @@ struct ContentView: View {
                 MemberView()
                     .tabItem{ Image(systemName: "viewfinder.circle.fill")}
                     .tag("Member")
-
+                    .background(Color.init("themeLightBlue").ignoresSafeArea())
+                
                 WalletView(hide: $hide)
                     .tabItem{ Image(systemName: "creditcard.circle.fill") }
                     .tag("Wallet")
 
-                AccountView()
+                ProfileView()
                     .tabItem{ Image(systemName: "person.crop.circle.fill") }
                     .tag("Profile")
+//                    .background(Color.init("themeLightBlue").ignoresSafeArea())
+                    
+                    
             }
-            
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarTitle("\(selection)")
             .accentColor(.blue)
             .navigationBarHidden( selection == "Wallet" ? true : false)
             
+            
         }
+        
     }
 }
 

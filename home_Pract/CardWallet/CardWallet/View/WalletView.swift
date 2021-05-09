@@ -77,12 +77,11 @@ struct BodyWalletView : View{
                     )
                     .simultaneousGesture(DragGesture(minimumDistance: card.expand ? 0 : 500).onChanged({ (_) in
                         print("dragging")
-                        
                     }))
                 }
             }
         }
-        .background(Color.init("themeLightBlue").ignoresSafeArea())
+        .background(LinearGradient(gradient: themeLight, startPoint: .leading, endPoint: .trailing).ignoresSafeArea())
         
     }
     

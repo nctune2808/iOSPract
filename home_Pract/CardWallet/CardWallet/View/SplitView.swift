@@ -22,7 +22,8 @@ struct SplitView: View {
             }
         }
         .navigationBarTitle("Total", displayMode: .inline)
-        
+        .background(LinearGradient(gradient: themeLight, startPoint: .leading, endPoint: .trailing).ignoresSafeArea())
+
         
     }
     

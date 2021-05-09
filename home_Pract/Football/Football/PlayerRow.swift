@@ -21,9 +21,3 @@ struct PlayerRow: View {
     }
     
 }
-
-struct PlayerRow_Previews: PreviewProvider {
-    static var previews: some View {
-        PlayerRow(player: playerList[0])
-    }
-}

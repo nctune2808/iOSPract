@@ -13,8 +13,3 @@ struct PlayerDetail: View {
     }
 }
 
-struct PlayerDetail_Previews: PreviewProvider {
-    static var previews: some View {
-        PlayerDetail()
-    }
-}

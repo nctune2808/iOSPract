@@ -31,6 +31,7 @@ struct ReceiptView: View {
             )
         }
         .padding(.horizontal,10)
+        .background(LinearGradient(gradient: themeLight, startPoint: .leading, endPoint: .trailing).ignoresSafeArea())
         .navigationBarTitle("Receipt", displayMode: .inline)
     }
 

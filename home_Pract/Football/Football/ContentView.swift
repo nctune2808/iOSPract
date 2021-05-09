@@ -10,18 +10,14 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         NavigationView{
-            List (playerList) {
-                player in
+            List (playerList) { player in
+                
                 NavigationLink (destination: Image(player.image)){ 
                     PlayerRow (player: player)
                 }
-            }.navigationBarTitle("FC.Barcelone")
+                
+            }
+            .navigationBarTitle("FC.Barcelone")
         }
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
     }
 }

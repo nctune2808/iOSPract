@@ -16,7 +16,11 @@ struct MemberView: View {
     
     var body: some View {
         
-        VStack(spacing: 20){
+//        VStack(spacing: 20, alignment: .leading){
+        VStack(alignment: .leading, spacing: 20) {
+            
+            Spacer()
+            
             ScrollView(.vertical, showsIndicators: false){
                 LazyVStack(alignment: .center, spacing: 10){
                     ForEach(memberList.memberData){ member in
@@ -27,27 +31,29 @@ struct MemberView: View {
                                 if !memberList.memberData.isEmpty{
                                     memberList.memberData.remove(at: indexMember(mem: member))
                                 }
-//                                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                             }, label: {
                                 Image(systemName: "xmark.circle.fill")
-                                    .padding(.all, 5)
+                                    .foregroundColor(.white)
+                                    .background(LinearGradient(gradient: themeHeavy, startPoint: .leading, endPoint: .trailing).clipShape(Circle()))
                             })
                         }
-                        .background(Capsule().stroke(Color.gray.opacity(0.5), lineWidth: 1))
+                        .background(LinearGradient(gradient: themeLight, startPoint: .leading, endPoint: .trailing).clipShape(Capsule()))
                     }
                 }
                 .padding()
-                
             }
             .frame(width: UIScreen.main.bounds.width - 30 ,height: UIScreen.main.bounds.height / 2)
-            .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray.opacity(0.5),lineWidth: 1.5))
             .background(Color.white.clipShape(RoundedRectangle(cornerRadius: 10)))
-
+            .background(RoundedRectangle(cornerRadius: 10).stroke(
+                LinearGradient(gradient: themeHeavy, startPoint: .leading, endPoint: .trailing),lineWidth: 3
+            ))
 
             TextField("Create new member", text: $create, onCommit: onAdd)
                 .padding()
-                .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray.opacity(0.5),lineWidth: 1.5))
                 .background(Color.white.clipShape(RoundedRectangle(cornerRadius: 10)))
+                .background(RoundedRectangle(cornerRadius: 10).stroke(
+                    LinearGradient(gradient: themeHeavy, startPoint: .leading, endPoint: .trailing),lineWidth: 3
+                ))
             
             Button(action: { onAdd() }, label: {
                 Text("Add member")
@@ -65,9 +71,11 @@ struct MemberView: View {
                     .frame(maxWidth: .infinity)
             })
             .padding()
-//            .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray.opacity(0.5),lineWidth: 1.5))
+
         }
         .padding()
+        .background(LinearGradient(gradient: themeLight, startPoint: .leading, endPoint: .trailing))
+        
     }
     
     func onAdd() {

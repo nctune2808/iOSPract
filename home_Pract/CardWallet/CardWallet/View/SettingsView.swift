@@ -12,6 +12,8 @@ struct SettingsView: View {
         
         Text("Settings")
             .navigationBarTitle("Settings")
+            .background(LinearGradient(gradient: themeLight, startPoint: .leading, endPoint: .trailing).ignoresSafeArea())
+
     }
 }
 

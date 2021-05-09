@@ -29,42 +29,39 @@ struct ScanningView: View {
                         .padding()
                         .background(item % 2 == 0 ? Color.black.opacity(0.8) : Color.white)
                         .foregroundColor(item % 2 == 0 ? .white : .black)
-                        
                     }
-                }
-                .sheet(isPresented: $showingScanningView) {
-                    ScanDocumentViewModel(recognizedText: self.$recognizedText)
-                        
+                    .background(LinearGradient(gradient: themeLight, startPoint: .leading, endPoint: .trailing).ignoresSafeArea())
                     
                 }
                 
+                .sheet(isPresented: $showingScanningView) {
+                    ScanDocumentViewModel(recognizedText: self.$recognizedText)
+                }
                 
+                Spacer()
 
                 HStack(spacing: 30) {
                    
                    Button(action: {
                         self.showingScanningView = true
                    }) {
-                       Text("Let's Scan")
+                       Text("Let's Scan").padding()
                    }
-                   .padding()
                    .foregroundColor(.white)
                    .background(Capsule().fill(Color.blue))
                                            
                     NavigationLink(destination: ReceiptView(memberData: memberList.memberData, productData: productData), label: {
-                        Text("Assign")
+                        Text("Assign").padding()
                     })
-                    .padding()
                     .foregroundColor(.white)
                     .background(Capsule().fill(Color.green))
                     .disabled(!isEnough()).opacity(isEnough() ? 1 : 0.3)
                     
-                    
                 }
-                .padding(.vertical, 5)
-                .padding(.bottom, 40)
-                .navigationBarTitle("Scan", displayMode: .inline)
+                
             }
+            .navigationBarTitle("Scan", displayMode: .inline)
+            .background(LinearGradient(gradient: themeLight, startPoint: .leading, endPoint: .trailing).ignoresSafeArea())
             
     }
     

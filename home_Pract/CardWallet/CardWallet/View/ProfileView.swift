@@ -9,26 +9,54 @@ import SwiftUI
 
 struct ProfileView : View {
     
+    @State var imgData =  Data.init(capacity: 0)
+    @State var shown = false
+    
+
+    
     var body: some View{
         
         ScrollView(.vertical, showsIndicators: false) {
             
-            VStack (spacing: 0){
+            VStack (spacing: 10){
                 HStack{
                     
                     NavigationLink(destination: SettingsView(), label: {
                         Image(systemName: "gearshape")
                             .font(.title)
-                            .foregroundColor(.primary)
+                            .foregroundColor(.white)
+                            .padding(.all, 5)
+                            .background(LinearGradient(gradient: themeHeavy, startPoint: .leading, endPoint: .trailing).clipShape(Circle()))
+                            
                     })
 
                     Spacer()
                     
-                    Image(systemName: "person.circle")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 80, height: 80)
-                        .clipShape(Circle())
+                    
+                    Button(action: {
+                        self.shown.toggle()
+                    }, label: {
+                        if imgData.count != 0 {
+                            Image(uiImage: UIImage(data: imgData)!)
+                                .resizable()
+                                .clipShape(Circle())
+                                .frame(width: 80, height: 80)
+                                
+                        } else {
+                            Image(systemName: "person.crop.circle.fill")
+                                .resizable()
+                                .frame(width: 80, height: 80)
+                                .accentColor(.gray.opacity(0.5))
+                        }
+                    }).sheet(isPresented: $shown) {
+                        ImagePicker(shown: $shown, imgData: $imgData)
+                    }
+                    .padding(.all, 3)
+                    .background(Circle().stroke(
+                        LinearGradient(gradient: themeHeavy, startPoint: .leading, endPoint: .trailing),lineWidth: 3)
+                    )
+                    
+                    
                     
 
                     Spacer()
@@ -36,7 +64,9 @@ struct ProfileView : View {
                     NavigationLink(destination: MessagingView(), label: {
                         Image(systemName: "message")
                             .font(.title)
-                            .foregroundColor(.primary)
+                            .foregroundColor(.white)
+                            .padding(.all, 5)
+                            .background(LinearGradient(gradient: themeHeavy, startPoint: .leading, endPoint: .trailing).clipShape(Circle()))
                     })
                 }
                 
@@ -48,8 +78,10 @@ struct ProfileView : View {
                     Text("Note List")
                 }
                 .frame(width: UIScreen.main.bounds.width - 30 ,height: UIScreen.main.bounds.height / 4)
-                .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray.opacity(0.5),lineWidth: 1.5))
                 .background(Color.white.clipShape(RoundedRectangle(cornerRadius: 10)))
+                .background(RoundedRectangle(cornerRadius: 10).stroke(
+                    LinearGradient(gradient: themeHeavy, startPoint: .leading, endPoint: .trailing),lineWidth: 3
+                ))
                 
                 Spacer()
                 
@@ -57,15 +89,21 @@ struct ProfileView : View {
                     Text("History Sharing")
                 }
                 .frame(width: UIScreen.main.bounds.width - 30 ,height: UIScreen.main.bounds.height / 3)
-                .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray.opacity(0.5),lineWidth: 1.5))
                 .background(Color.white.clipShape(RoundedRectangle(cornerRadius: 10)))
+                .background(RoundedRectangle(cornerRadius: 10).stroke(
+                    LinearGradient(gradient: themeHeavy, startPoint: .leading, endPoint: .trailing),lineWidth: 3
+                ))
             }
             .padding()
             
         }
-        .background(Color.init("themeLightBlue").ignoresSafeArea())
+        .background(LinearGradient(gradient: themeLight, startPoint: .leading, endPoint: .trailing))
+//        .background(Color.init("themeLightBlue").ignoresSafeArea())
+        
     }
 }
+
+
 
 
 struct AccountView: View {

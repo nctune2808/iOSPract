@@ -11,5 +11,7 @@ struct MessagingView: View {
     var body: some View {
         Text("Message")
             .navigationBarTitle("Message")
+            .background(LinearGradient(gradient: themeLight, startPoint: .leading, endPoint: .trailing).ignoresSafeArea())
+
     }
 }

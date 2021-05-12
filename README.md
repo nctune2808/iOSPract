@@ -1,5 +1,7 @@
 # Bill-Shared Scanning App
 
+![Alt text](home_Pract/CardWallet/Poster/Poster.png?raw=true "Title")
+
 ## Project setup
 
 #### Open terminal and clone project
